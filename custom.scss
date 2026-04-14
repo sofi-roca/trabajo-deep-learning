@@ -1,0 +1,51 @@
+/*-- scss:defaults --*/
+
+// 1. IMPORTAR FUENTES DE GOOGLE
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@300;400;600&display=swap');
+
+// 2. DEFINIR PALETA DE COLORES
+$body-bg: #FFF9F8;          // Crema suave de fondo
+$body-color: #2D2926;       // Texto en carbón oscuro
+$heading-color: #9B4D4D;    // Títulos en rosa profundo/terracota
+$link-color: #9B4D4D;       // Enlaces
+$selection-bg: #E2B4B4;     // Color al resaltar texto
+
+// 3. TIPOGRAFÍAS
+$font-family-sans-serif: 'Montserrat', sans-serif;
+$presentation-heading-font: 'Playfair Display', serif;
+$presentation-heading-font-weight: 700;
+
+/*-- scss:rules --*/
+
+// Estilo para el título de la diapositiva
+.reveal .slides h2 {
+  border-bottom: 2px solid rgba(155, 77, 77, 0.2);
+  padding-bottom: 10px;
+  text-transform: none;
+}
+
+// Estilo para enfatizar texto importante
+.reveal .slides strong {
+  color: #9B4D4D;
+  font-weight: 600;
+}
+
+// Personalizar el pie de página
+.reveal .footer {
+  color: #9B4D4D;
+  font-size: 0.5em;
+  opacity: 0.6;
+}
+
+// Decoración de fondo (opcional: una línea sutil al fondo de cada slide)
+.reveal .slides {
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -10%;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #9B4D4D 0%, #E2B4B4 100%);
+  }
+}
