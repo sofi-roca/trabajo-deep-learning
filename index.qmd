@@ -16,13 +16,12 @@ MODELOS DE DEEP LEARNING
 :::
 
 ::: {.columns}
-::: {.column width="35%"}
-**Integrantes:** Bianca Bruna  
-Sofía Roca
+::: {.column width="50%"}
+**Integrantes:** <br> Sofía Roca Contreras <br> Bianca Bruna Ramírez
 :::
 
-::: {.column width="35%"}
-**Profesor:** Francisco Plaza
+::: {.column width="50%"}
+**Profesor:** <br> Francisco Plaza
 :::
 :::
 
