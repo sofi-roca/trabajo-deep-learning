@@ -1,4 +1,5 @@
 ---
+pagetitle: "Predicción de la Fase del Ciclo Menstrual"
 format:
   revealjs:
     theme: [default, custom.scss]
