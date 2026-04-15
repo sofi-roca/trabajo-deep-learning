@@ -21,7 +21,7 @@ MODELOS DE DEEP LEARNING
 :::
 
 ::: {.column width="50%"}
-**Profesor:** <br> Francisco Plaza
+**Profesor:** <br> Francisco Plaza-Vega
 :::
 :::
 
@@ -32,23 +32,19 @@ Universidad de Santiago de Chile
 ---
 
 ## Introducción
-Aquí empieza tu segunda diapositiva...
 
-## Quarto
+**Motivación**
 
-Quarto enables you to weave together content and executable code into a finished presentation. To learn more about Quarto presentations see <https://quarto.org/docs/presentations/>.
+## Objetivos
 
-## Bullets
+**Objetivo general:**
 
-When you click the **Render** button a document will be generated that includes:
+**Objetivos específicos:**
 
--   Content authored with markdown
--   Output from executable code
+## Marco teórico
 
-## Code
+## Estado del arte
 
-When you click the **Render** button a presentation will be generated that includes both content and the output of embedded code. You can embed code like this:
+## Metodología
 
-```{r}
-1 + 1
-```
+## Referencias
