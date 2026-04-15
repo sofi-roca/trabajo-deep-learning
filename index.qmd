@@ -1,12 +1,39 @@
 ---
-title: "Predicción del Ciclo Menstrual"
 format:
   revealjs:
-    theme: [default, ./custom.scss] # Usa el estilo base y añade el tuyo
-    footer: "Análisis de Datos y Salud Menstrual"
-    incremental: true             # Las listas aparecen click a click
+    theme: [default, custom.scss]
     self-contained: true
+    logo: logo.png
+# Esto desactiva la portada automática para que no se duplique
+title-slide-attributes:
+  data-state: "hide-title-slide"
 ---
+
+# Predicción de la Fase del Ciclo Menstrual {vertical-align="middle" text-align="center"}
+
+::: {style="font-size: 0.7em; color: #2D2926; margin-bottom: 50px; letter-spacing: 2px;"}
+MODELOS DE DEEP LEARNING
+:::
+
+::: {.columns}
+::: {.column width="35%"}
+**Integrantes:** Bianca Bruna  
+Sofía Roca
+:::
+
+::: {.column width="35%"}
+**Profesor:** Francisco Plaza
+:::
+:::
+
+::: {style="margin-top: 60px; font-size: 0.8em; color: #9B4D4D;"}
+Universidad de Santiago de Chile  
+:::
+
+---
+
+## Introducción
+Aquí empieza tu segunda diapositiva...
 
 ## Quarto
 
