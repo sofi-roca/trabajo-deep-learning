@@ -30,22 +30,19 @@ MODELOS DE DEEP LEARNING
 Universidad de Santiago de Chile  
 :::
 
----
+## Planteamiento del problema
 
-## Introducción
+## Justificación
 
-**Motivación**
+## Estado del arte
 
-## Objetivos
+## Hipotesis y objetivos
+**Hipotesis**
 
 **Objetivo general:**
 
 **Objetivos específicos:**
 
-## Marco teórico
-
-## Estado del arte
-
-## Metodología
+## Metodología preliminar
 
 ## Referencias
