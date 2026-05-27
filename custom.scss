@@ -49,3 +49,9 @@ $presentation-heading-font-weight: 700;
     background: linear-gradient(90deg, #9B4D4D 0%, #E2B4B4 100%);
   }
 }
+
+// Justificar el texto en párrafos y listas
+.reveal .slides p,
+.reveal .slides li {
+  text-align: justify;
+}
