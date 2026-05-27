@@ -10,13 +10,13 @@ title-slide-attributes:
   data-state: "hide-title-slide"
 ---
 
-# Predicción de la Fase del Ciclo Menstrual {vertical-align="middle" text-align="center"}
+# Clasificación de las Fases del Ciclo Menstrual {vertical-align="middle" text-align="center"}
 
 ::: {style="font-size: 0.7em; color: #2D2926; margin-bottom: 50px; letter-spacing: 2px;"}
 MODELOS DE DEEP LEARNING
 :::
 
-::: {.columns}
+::::: columns
 ::: {.column width="50%"}
 **Integrantes:** <br> Sofía Roca Contreras <br> Bianca Bruna Ramírez
 :::
@@ -24,25 +24,164 @@ MODELOS DE DEEP LEARNING
 ::: {.column width="50%"}
 **Profesor:** <br> Francisco Plaza-Vega
 :::
+:::::
+
+::: {style="margin-top: 60px; font-size: 0.6em; color: #9B4D4D;"}
+Universidad de Santiago de Chile
 :::
 
-::: {style="margin-top: 60px; font-size: 0.8em; color: #9B4D4D;"}
-Universidad de Santiago de Chile  
+# Introducción
+
+## ¿Qué es el ciclo menstrual?
+
+El ciclo menstrual es un proceso biológico continuo que se define anatómica y endocrinológicamente a través de una secuencia cíclica de 4 fases:
+
+![Fases ciclo menstrual](C:/Users/sofir/OneDrive/Escritorio/Universidad/Deep%20learning/fases_ciclo_2.webp){#fig-etiqueta width="30%" fig-align="center"}
+
+## Fases del ciclo menstrual {.smaller}
+
+- **Fase menstrual:** Es la etapa inicial, donde ocurre el desprendimiento y expulsión del tejido endometrial. Hay una baja en los niveles de estrógeno y progesterona.
+
+- **Fase folicular:** Los niveles de estrógeno aumentan lo que impulsa la reconstrucción del revestimiento uterino y la maduración de lo folículos ováricos.
+
+- **Ovulación:** Se alcanza el punto máximo en los niveles de estrógeno y existe aumento repentino de la hormona luteinizante (LH) lo que desencadena la liberación del óvulo.
+
+- **Fase lútea:** Después de la ovulación, el foliculo vacio se transforma en cuerpo lúteo, secretando progresterona para densificar el endometrio. 
+
+## Planteamiento del problema {.smaller}
+
+**Problema:** Los métodos manuales y calendarios asumen ciclos estáticos y regulares. Estos fallan ante alteraciones por estrés, estilo de vida o diagnosticos médicos, además son propensos al error humano.
+
+**El Desafío de los Datos:** Computacionalmente, los historiales menstruales conforman series temporales inherentemente ruidosas, incompletas y con complejas dependencias a largo plazo.
+
+**El Límite Algorítmico:** Los algoritmos lineales clásicos son incapaces de procesar y capturar esta variabilidad de manera efectiva.
+
+**Solución:** Desarrollar arquitecturas avanzadas de Deep Learning que procesen secuencias temporales y biomarcadores fisiológicos para predecir con exactitud las fases en ciclos regulares e irregulares.
+
+## Justificación {.smaller}
+
+Algunas de las dimensiones que más se ven impactadas al desarrollar un buen modelo predictivo son:
+
+- **Salud Reproductiva y Planificación Familiar:** Permite a las parejas planificar o evitar embarazos de manera natural, reduciendo los riesgos de salud o económicas.
+
+- **Manejo Personalizado de Síntomas:** Ayuda a gestionar ciertos síntomas como la fatiga, cambios de humor, calambres, etc.
+
+- **Intervenciones Nutricionales y de Estilo de Vida:** La predicción de la fase habilita la creación de recomendaciones dietéticas personalizadas, ya que los requerimientos nutricionales varían según la etapa del ciclo.
+
+- **Cierre de la Brecha Tecnológica y Educativa:** Implementar soluciones basadas en IA no solo provee predicciones clínicas, sino que ofrece a las mujeres un espacio confidencial y educativo para gestionar su salud de manera proactiva.
+
+## Estado del Arte: Modelado de Series Temporales {.smaller}
+
+::: {style="font-size: 70%;"}
+| Modelo | Precisión | Error | Adaptabilidad |
+|------------------|------------------|------------------|------------------|
+| **LSTM** | **90% – 91.3%** | RMSE: 1.7 | Excelente. Modela ventanas fértiles irregulares. |
+| **CNN 1D** | **88.9%** | RMSE: 1.9 | Moderada. Extrae patrones locales sin memoria larga. |
+| **ML Clásico** | **78% – 85.2%** | RMSE: 2.3 | Baja. Falla ante variabilidad temporal. |
 :::
 
-## Planteamiento del problema
+\vspace{0.3cm}
 
-## Justificación
+\scriptsize Por lo tanto, las redes **LSTM** dominan la predicción del ciclo menstrual debido a su capacidad para capturar dependencias temporales y patrones históricos complejos. En cambio el modelo clásico presenta dificultades para mantener la consistencia temporal en ciclos irregulares.
 
-## Estado del arte
+## Estado del Arte: Biomarcadores Fisiológicos {.smaller}
 
-## Hipotesis y objetivos
-**Hipotesis**
+::: {style="font-size: 70%;"}
+| Biomarcador | Modelo Aplicado | Objetivo Clínico | Resultado |
+|------------------|------------------|------------------|------------------|
+| **Temperatura Corporal Basal (BBT)** | Red LSTM | Pronosticar el día exacto de ovulación | \~95% de precisión minimizando el Error Absoluto Medio (MAE). |
+| **Temperatura Piel Abdominal (AST)** | LSTM Bidireccional + CPD(Change Point Detection) | Clasificar con éxito las fases: folicular, ovulatoria y lútea | Mejora notable en la detección de fases complejas, elevando significativamente el *F-measure.* |
+:::
 
-**Objetivo general:**
+\scriptsize El uso de biometría continua mediante sensores portátiles ha permitido identificar fases del ciclo menstrual con una precisión cercana al nivel clínico.
+
+## Transformers y Sistemas Híbridos {.smaller}
+
+::: {style="font-size: 70%;"}
+| Enfoque | Algoritmos | Aplicación | Impacto |
+|------------------|------------------|------------------|------------------|
+| **Nutrición** | Transformers | Identificar fases a partir de sintomas y recomendar dietas personalizadas. | **96% precisión**, superando a redes CNN, GANs y RNNs (menor tasa de error) |
+| **Predicción múltiple** | Promedios ponderados + RF | Predicción del ciclo (promedios ponderados) y síntomas diarios (Random Forest). | 86% en ciclos y 82% en síntomas del día siguiente. |
+| **Sistemas híbridos** | Reglas + LSTM (Adam) | Corregir ciclos anómalos con biometría. | Menor MSE y alta precisión temporal. |
+:::
+
+\vspace{0.15cm}
+
+\scriptsize En general, la tendencia actual es combinar múltiples modelos de inteligencia artificial para construir sistemas más precisos, personalizados y adaptativos.
+
+## Hipótesis y objetivos {.smaller}
+
+**Hipótesis**
+
+- Contrario a métodos tradicionales (poner aquí métodos) que asumen ciclos regulares, un modelos de Deep Learning (poner aquí modelos) logrará clasificar fases menstruales de personas con ciclos irregulares.
+
+**Objetivo general:** Desarrollar un modelo de Deep Learning para clasificar de forma precisa las fases del ciclo menstrual, que sea capaz de adaptarse a ciclos irregulares.
 
 **Objetivos específicos:**
 
-## Metodología preliminar
+- **Preprocesar y estructurar datos fisiológicos secuanciales:** Limpiar y estructurar una base de datos que contiene variables temporales y aplicar técnicas de imputación para los valores faltantes.
 
-## Referencias
+- **Seleccionar y explicar modelos de Deep Learning:**
+
+- **Explicar las métricas para validar la precisión del modelo:**
+
+## Preprocesamiento de Datos {.smaller}
+
+**Base de datos** de 80 variables y 1665 observaciones extraida de [Kaggle](https://www.kaggle.com/datasets/nikitabisht/menstrual-cycle-data).
+
+**Limpieza de base de datos** Selección de 14 variables y se mantienen las 1665 observaciones.
+
+## Preprocesamiento de Datos {.smaller}
+
+::: {style="font-size: 52%;"}
+| Variables | Descripción | Tipo | Valores |
+|------------------|------------------|------------------|------------------|
+| ClientID | Identificador único de la usuaria | Texto |  |
+| CycleNumber | Número secuencial del ciclo registrado para esa usuaria | Entero | \[1, 45\] |
+| Age | Edad de la usuaria | Entero | \[21, 43\] |
+| BMI | Índice de Masa Corporal (IMC) | Decimal | \[16.83, 49.92\] |
+| LengthofCycle | Duración total del ciclo en días. | Entero | \[18, 54\] |
+| MeanCycleLength | Promedio de duración de los ciclos de la usuaria | Entero | \[24, 40\] |
+| LengthofMenses | Duración del periodo menstrual (días de sangrado) | Entero | \[2, 15\] |
+| MeanMensesLength | Promedio de duración de la menstruación | Decimal | \[2.4, 9\] |
+| MeanBleedingIntensity | Intensidad promedio de sangrado | Decimal | \[3.33, 18.33\] |
+| FirstDayofHigh | Primer día de niveles "altos" de fertilidad detectados | Entero | \[5, 26\] |
+| TotalNumberofHighDays | Cantidad total de días con fertilidad alta | Entero | \[0, 22\] |
+| TotalNumberofPeakDays | Cantidad de días en el nivel máximo (Peak) de fertilidad | Entero | \[0, 13\] |
+| EstimatedDayofOvulation | Día estimado de la ovulación dentro del ciclo | Entero | \[6, 29\] |
+| LengthofLutealPhase | Duración de la fase lútea (post-ovulación) | Entero | \[1, 41\] |
+:::
+
+## Metodología preliminar: Estructura Temporal de los Datos {.smaller}
+
+- Formateo de secuencias: Transformar registros aislados en secuencias cronológicas para que una red neuronal pueda comprender el paso del tiempo.
+
+- Para que arquitecturas de Deep Learning funcionen, hay que detallar como se organizan los datos para preservar estas dependencias temporales.
+
+## Metodología preliminar: Manejo del Desbalanceo de Clases
+
+## Diseño Conceptual de la Arquitectura del Modelo {.smaller}
+
+1.  **Redes LSTM (Long Short-Term Memory):** Son un tipo de Redes Neuronales Recurrentes (RNN) y representan el enfoque estándar y más validado empíricamente para el análisis del ciclo menstrual.
+
+A diferencia de las redes tradicionales, las LSTM tienen una memoria interna (cell state). Utilizan mecanismos matemáticas conocidos como "gates": la puerta de olvido, la puerta de entrada y la puerta de salida. Estas puertas deciden dinámicamente que información histórica del ciclo se debe conservar, que información borrar y que datos nuevos se deben agregar.
+
+**¿Cómo resolverían el problema?** El ciclo menstrual es secuencial; la fase en la que se encuentra una persona hoy depende de lo ocurrido en los días previos. Las LSTM capturan estas dependencias temporales complejas a largo plazo, lo que permite adaptarse a ciclos irregulares.
+
+## Diseño Conceptual de la Arquitectura del Modelo {.smaller}
+
+2.  **1D-CNN (Redes Neuronales Convolucionales):** Si bien las CNN son conocidas por su aplicación en el reconomiento de imagenes, existe una versión unidimensional (1D-CNN) que se emplea para procesar datos fisiológicos estructurados y series temporales. Estas utilizan una operación matemática llamada "convolución". Emplea "kernels" que se deslizan a lo largo de la secuencia de datos y, en cada paso, el filtro extrae "mapas de características" multiplicando los pesos aprendidos por los valores de entrada. Esto crea un resumen de los patrones más importantes.
+
+**¿Cómo resolverían el problema?** Mientras que las LSTM miran toda la historia a largo plazo, las CNN extraen patrones a corto plazo. En este caso, una 1D-CNN actua como un "escáner" que puede identificar picos repentinos que los humanos podrían pasar por alto, como una caida y posterior subida de la temperatura basal, lo cual es un indicador clave de la transición hacia la ovulación.
+
+## Diseño Conceptual de la Arquitectura del Modelo {.smaller}
+
+3.  **Transformers:** Originalmente utilizados para el procesamiento de lenguaje natural, ahora se aplican a datos de salud y series temporales. Los Transformers abandonan por completo el procesamiento secuencial paso a paso que usan las LSTM. En su lugar, procesan toda la serie de tiempo de forma simultánea, utilizando un mecanismo matemático llamado *Self-Attention*, el cual calcula una matriz de pesos para evaluar que tanta importancia debe prestarle la red a cada día del ciclo para predecir la fase actual.
+
+**¿Cómo resolverían el problema?** Este método resuelve la limitación de la memoria a largo plazo al crear correlaciones directas entre cualquier par de datos, sin importar que tan separados estén en el tiempo.
+
+## Metodología preliminar: Protocolo de Entrenamiento y Optimización
+
+## Metodología preliminar: Métricas de Evaluación de Rendimiento
+
+## Referencias {.smaller}
