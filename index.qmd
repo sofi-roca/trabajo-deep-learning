@@ -8,6 +8,8 @@ format:
 # Esto desactiva la portada automática para que no se duplique
 title-slide-attributes:
   data-state: "hide-title-slide"
+bibliography: referencias.bib
+csl: "https://raw.githubusercontent.com/citation-style-language/styles/master/ieee.csl"
 ---
 
 # Clasificación de las Fases del Ciclo Menstrual {vertical-align="middle" text-align="center"}
@@ -34,19 +36,35 @@ Universidad de Santiago de Chile
 
 ## ¿Qué es el ciclo menstrual? {.smaller}
 
-El ciclo menstrual es un proceso biológico continuo que se define anatómica y endocrinológicamente a través de una secuencia cíclica de 4 fases:
+El ciclo menstrual [@msd2024ciclomenstrual] es un proceso biológico continuo que se define anatómica y endocrinológicamente a través de una secuencia cíclica de 4 fases: 
 
 ![Fases ciclo menstrual](C:/Users/sofir/OneDrive/Escritorio/Universidad/Deep%20learning/fases_ciclo_2.webp){#fig-etiqueta width="30%" fig-align="center"}
 
 ## Fases del ciclo menstrual {.smaller}
 
-- **Fase menstrual:** Es la etapa inicial, donde ocurre el desprendimiento y expulsión del tejido endometrial. Hay una baja en los niveles de estrógeno y progesterona.
+**Fase menstrual:** Es la etapa inicial, donde ocurre el desprendimiento y expulsión del tejido endometrial. Hay una baja en los niveles de estrógeno y progesterona.
 
-- **Fase folicular:** Los niveles de estrógeno aumentan lo que impulsa la reconstrucción del revestimiento uterino y la maduración de lo folículos ováricos.
+**Fase folicular:** Los niveles de estrógeno aumentan lo que impulsa la reconstrucción del revestimiento uterino y la maduración de lo folículos ováricos.
 
-- **Ovulación:** Se alcanza el punto máximo en los niveles de estrógeno y existe aumento repentino de la hormona luteinizante (LH) lo que desencadena la liberación del óvulo.
+**Ovulación:** Se alcanza el punto máximo en los niveles de estrógeno y existe aumento repentino de la hormona luteinizante (LH) lo que desencadena la liberación del óvulo.
 
-- **Fase lútea:** Después de la ovulación, el foliculo vacio se transforma en cuerpo lúteo, secretando progresterona para densificar el endometrio. 
+**Fase lútea:** Después de la ovulación, el foliculo vacio se transforma en cuerpo lúteo, secretando progresterona para densificar el endometrio. 
+
+## Ciclos regulares e irregulares {.smaller}
+
+**Ciclo regular**: La duración habitual es de 24 a 38 días y la variación entre el ciclo más corto y el más largo de la misma persona es menor a 7 - 9 días.
+
+**Ciclo irregular**: Es cuando se cumple una de esas condiciones:
+
+- Es más corto de 24 días (Polimenorrea).
+
+- Es más largo de 38 días (Oligomenorrea).
+
+- La variación entre el ciclo más largo y el más corto es mayor a 9 días en un periodo de 6 meses.
+
+$\text{Variación ciclo} = \text{Ciclo más largo} - \text{Ciclo más corto}$ [@munro2022figo]
+
+# Planteamiento del problema
 
 ## Planteamiento del problema {.smaller}
 
@@ -77,9 +95,9 @@ Algunas de las dimensiones que más se ven impactadas al desarrollar un buen mod
 ::: {style="font-size: 70%;"}
 | Modelo | Precisión | Error | Adaptabilidad |
 |------------------|------------------|------------------|------------------|
-| **LSTM** | **90% – 91.3%** | RMSE: 1.7 | Excelente. Modela ciclos irregulares. |
+| **LSTM** [@khairunisa2025comparison] | **90% – 91.3%** | RMSE: 1.7 | Excelente. Modela ciclos irregulares. |
 | **CNN 1D** | **88.9%** | RMSE: 1.9 | Buena: Identifica patrones clave, pero es inferior a LSTM en secuencias largas. |
-| **ML Clásico** | **78% – 85.2%** | RMSE: 2.3 | Baja. Falla ante ciclos irregualres. |
+| **ML Clásico** [@harshavardhan2025ai] | **78% – 85.2%** | RMSE: 2.3 | Baja. Falla ante ciclos irregualres. |
 :::
 
 \vspace{0.3cm}
@@ -92,7 +110,7 @@ Algunas de las dimensiones que más se ven impactadas al desarrollar un buen mod
 | Biomarcador | Modelo Aplicado | Objetivo Clínico | Resultado |
 |------------------|------------------|------------------|------------------|
 | **Temperatura Corporal Basal (BBT)** | Red LSTM | Identificar la ventana de ovulación. | \~95% de precisión minimizando el Error Absoluto Medio (MAE). |
-| **Temperatura Piel Abdominal (AST)** | LSTM Bidireccional + CPD(Cumulative Probability Distribution). | Clasificar con éxito las fases: folicular, ovulatoria y lútea | Mejora notable en la detección de fases complejas, elevando significativamente el *F-measure.* |
+| **Temperatura Piel Abdominal (AST)** [@murayama2023determination] | LSTM Bidireccional + CPD(Cumulative Probability Distribution). | Clasificar con éxito las fases: folicular, ovulatoria y lútea | Mejora notable en la detección de fases complejas, elevando significativamente el *F-measure.* |
 :::
 
 \scriptsize El uso de biometría continua mediante sensores portátiles ha permitido identificar fases del ciclo menstrual con una precisión cercana al nivel clínico.
@@ -102,9 +120,9 @@ Algunas de las dimensiones que más se ven impactadas al desarrollar un buen mod
 ::: {style="font-size: 70%;"}
 | Enfoque | Algoritmos | Aplicación | Impacto |
 |------------------|------------------|------------------|------------------|
-| **Nutrición** | Transformers | Identificar fases a partir de sintomas y recomendar dietas personalizadas. | **96% precisión**, superando a redes CNN, GANs y RNNs (menor tasa de error) |
-| **Prevención de Riesgos** | Ecosistemas Multimodelo (Random Forest) | Evalua síntomas oara alertar sobre condiciones (como el SOP o dismenorrea) y pronostica síntomas diarios. | 73% de exactitud en síntomas de alerta y 82% al pronosticar síntomas. |
-| **Sistemas híbridos** | Reglas Matemáticas + LSTM | Corregir ciclos anómalos con biometría. | Menor MSE y alta precisión temporal. |
+| **Nutrición** [@logapriya2024optimized] | Transformers | Identificar fases a partir de sintomas y recomendar dietas personalizadas. | **96% precisión**, superando a redes CNN, GANs y RNNs (menor tasa de error) |
+| **Prevención de Riesgos** [@gulati2026menstrual] | Ecosistemas Multimodelo (Random Forest) | Evalua síntomas oara alertar sobre condiciones (como el SOP o dismenorrea) y pronostica síntomas diarios. | 73% de exactitud en síntomas de alerta y 82% al pronosticar síntomas. |
+| **Sistemas híbridos** [@khadse2025systematic] | Reglas Matemáticas + LSTM | Corregir ciclos anómalos con biometría. | Menor MSE y alta precisión temporal. |
 :::
 
 \vspace{0.15cm}
@@ -115,7 +133,7 @@ Algunas de las dimensiones que más se ven impactadas al desarrollar un buen mod
 
 ## Hipótesis {.smaller}
 
-- Contrario a métodos tradicionales (poner aquí métodos) que asumen ciclos regulares, un modelos de Deep Learning (poner aquí modelos) logrará clasificar fases menstruales de personas con ciclos irregulares.
+- Contrario a métodos tradicionales (como el método del calendario o regresión lineal simple) que asumen ciclos regulares, un modelo de Deep Learning (como LSTM o Transformers) logrará clasificar fases menstruales de personas con ciclos irregulares.
 
 ## Objetivos {.smaller}
 
@@ -123,33 +141,31 @@ Algunas de las dimensiones que más se ven impactadas al desarrollar un buen mod
 
 **Objetivos específicos:**
 
-- **Preprocesar y estructurar datos fisiológicos secuanciales:** Limpiar y estructurar una base de datos que contiene variables temporales y aplicar técnicas de imputación para los valores faltantes.
+- **Preprocesar y estructurar datos fisiológicos secuenciales:** Limpiar y estructurar una base de datos que contiene variables temporales y aplicar técnicas de imputación para los valores faltantes.
 
 - **Explicar las métricas para validar la precisión del modelo:** Definir métricas de rendimiento para asegurar la validación del modelo.
 
 # Metodología preliminar
 
-## Métodología preliminar
+## Métodología preliminar {.smaller}
 
-- **Fase 1**: Preprocesamiento y Estructura Temporal de los Datos
+**Fase 1**: Preprocesamiento.
 
-- **Fase 2**: Diseño Conceptual de la Arquitectura del Modelo
+**Fase 2**: Diseño conceptual de la arquitectura del modelo.
 
-- **Fase 3**: Evaluación y métricas de Rendimiento
+**Fase 3**: Evaluación y métricas de rendimiento.
 
-# Fase 1 : Preprocesamiento y Estructura Temporal de los Datos 
-
-## Preprocesamiento {.smaller}
-
-- **Base de datos** de 80 variables y 1665 observaciones extraida de [Kaggle](https://www.kaggle.com/datasets/nikitabisht/menstrual-cycle-data)
-
-- Regristros de ciclos menstruales de 159 personas.
+# Fase 1 : Preprocesamiento 
 
 ## Preprocesamiento {.smaller}
+
+**Base de datos** de 80 variables y 1665 observaciones extraida de [Kaggle](https://www.kaggle.com/datasets/nikitabisht/menstrual-cycle-data)
+
+Registros de ciclos menstruales de 159 personas.
 
 ::: {style="font-size: 52%;"}
 | Variables | Descripción | Tipo |
-|------------------|------------------|------------------|
+|:------------------:|:------------------:|:------------------:|
 | id | Identificador único de la usuaria | Texto |
 | numero_ciclo | Número secuencial del ciclo registrado para esa usuaria | Entero |
 | edad | Edad de la usuaria | Entero |
@@ -170,65 +186,51 @@ Algunas de las dimensiones que más se ven impactadas al desarrollar un buen mod
 
 Visualización de las primeras 5 observaciones de la base de datos.
 
-```{r}
-library(dplyr)
-df = read.csv("C:/Users/sofir/OneDrive/Escritorio/Universidad/Deep learning/FedCycleData071012 (2).csv")
-df_filter <- df %>%
-  select(ClientID, CycleNumber, Age, BMI, LengthofCycle, MeanCycleLength, LengthofMenses, MeanMensesLength,
-         MeanBleedingIntensity, FirstDayofHigh, TotalNumberofHighDays, TotalNumberofPeakDays,
-         EstimatedDayofOvulation, LengthofLutealPhase)
-df_filter <- df_filter %>% 
-  rename(id                         = ClientID,
-    numero_ciclo               = CycleNumber,
-    edad                       = Age,
-    imc                        = BMI,
-    duracion_ciclo             = LengthofCycle,
-    promedio_duracion_ciclo    = MeanCycleLength,
-    duracion_menstruacion      = LengthofMenses,
-    promedio_duracion_menstruacion   = MeanMensesLength,
-    intensidad_sangrado_media  = MeanBleedingIntensity,
-    primer_dia_alta_fertilidad            = FirstDayofHigh,
-    total_dias_alta_fertilidad           = TotalNumberofHighDays,
-    total_dias_peak_fertilidad            = TotalNumberofPeakDays,
-    dia_estimado_ovulacion     = EstimatedDayofOvulation,
-    duracion_fase_lutea        = LengthofLutealPhase)
+::: {style="font-size: 45%; overflow-x: auto;"}
+| id | numero_ciclo | edad | imc | duracion_ciclo | promedio_duracion_ciclo | duracion_menstruacion | promedio_duracion_menstruacion | intensidad_sangrado_media | primer_dia_alta_fertilidad | total_dias_alta_fertilidad | total_dias_peak_fertilidad | dia_estimado_ovulacion | duracion_fase_lutea |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| nfp8122 | 1 | 36 | 21.25472 | 29 | 27.33 | 5 | 4.49 | 9.04 | 12 | 5 | 2 | 17 | 12 |
+| nfp8122 | 2 | NA | NA | 27 | NA | 5 | NA | NA | 13 | 2 | 2 | 15 | 12 |
+| nfp8122 | 3 | NA | NA | 29 | NA | 5 | NA | NA | NA | 1 | 2 | 15 | 14 |
+| nfp8122 | 4 | NA | NA | 27 | NA | 5 | NA | NA | 13 | 2 | 2 | 15 | 12 |
+| nfp8122 | 5 | NA | NA | 28 | NA | 5 | NA | NA | 12 | 4 | 2 | 16 | 12 |
+:::
 
-head(df_filter,5)
-```
+**¿Qué hacer con los NA?** Se puede proceder con lo siguiente dependiendo del caso:
 
-## Estructura Temporal de los Datos {.smaller}
+- **Relleno hacia adelante** (Forward Fill) utilizando la función *fill* del paquete *tidyr*.
 
-- Formateo de secuencias: Transformar registros aislados en secuencias cronológicas para que una red neuronal pueda comprender el paso del tiempo.
+- **Imputación por Media o Mediana**: En lugar de rellenar con ceros, usar el promedio o mediana del paciente, es decir, utilizar su propio historial.
 
-- Para que arquitecturas de Deep Learning funcionen, hay que detallar como se organizan los datos para preservar estas dependencias temporales.
+- **Imputación Múltiple (Machine Learning):** Para variables donde no existe historial previo, se empleará el paquete *mice* de R (Multivariate Imputation by Chained Equations). Este algoritmo evalúa el comportamiento de pacientes con perfiles fisiológicos similares para estimar el valor faltante con alta precisión estadística.
 
 # Fase 2: Diseño Conceptual de la Arquitectura del Modelo
 
 ## Redes LSTM (Long Short-Term Memory) {.smaller}
 
-Son un tipo de Redes Neuronales Recurrentes (RNN) y representan el enfoque estándar y más validado empíricamente para el análisis del ciclo menstrual.
+Son un tipo de Redes Neuronales Recurrentes (RNN) [@khairunisa2025comparison] y representan el enfoque estándar y más validado empíricamente para el análisis del ciclo menstrual.
 
-A diferencia de las redes tradicionales, las LSTM tienen una memoria interna (cell state). Utilizan mecanismos matemáticas conocidos como "gates": la puerta de olvido, la puerta de entrada y la puerta de salida. Estas puertas deciden dinámicamente que información histórica del ciclo se debe conservar, que información borrar y que datos nuevos se deben agregar.
+A diferencia de las redes tradicionales, las LSTM tienen una memoria interna (cell state) [@logapriya2024optimized]. Utilizan mecanismos matemáticas conocidos como "gates": la puerta de olvido, la puerta de entrada y la puerta de salida. Estas puertas deciden dinámicamente que información histórica del ciclo se debe conservar, que información borrar y que datos nuevos se deben agregar.
 
-**¿Cómo resolverían el problema?** El ciclo menstrual es secuencial; la fase en la que se encuentra una persona hoy depende de lo ocurrido en los días previos. Las LSTM capturan estas dependencias temporales complejas a largo plazo, lo que permite adaptarse a ciclos irregulares.
+**¿Cómo resolverían el problema?** El ciclo menstrual es secuencial; la fase en la que se encuentra una persona hoy depende de lo ocurrido en los días previos. Las LSTM capturan estas dependencias temporales [@harshavardhan2025ai] complejas a largo plazo, lo que permite adaptarse a ciclos irregulares.[@khadse2025systematic]
 
 ## 1D-CNN (Redes Neuronales Convolucionales) {.smaller}
 
-Si bien las CNN son conocidas por su aplicación en el reconomiento de imagenes, existe una versión unidimensional (1D-CNN) que se emplea para procesar datos fisiológicos estructurados y series temporales. Estas utilizan una operación matemática llamada "convolución". Emplea "kernels" que se deslizan a lo largo de la secuencia de datos y, en cada paso, el filtro extrae "mapas de características" multiplicando los pesos aprendidos por los valores de entrada. Esto crea un resumen de los patrones más importantes.
+Si bien las CNN son conocidas por su aplicación en el reconomiento de imagenes [@khairunisa2025comparison], existe una versión unidimensional (1D-CNN) que se emplea para procesar datos fisiológicos estructurados y series temporales [@clark2018open]. Estas utilizan una operación matemática llamada "convolución". Emplea "kernels" que se deslizan a lo largo de la secuencia de datos y, en cada paso, el filtro extrae "mapas de características" multiplicando los pesos aprendidos por los valores de entrada. Esto crea un resumen de los patrones más importantes.[@logapriya2024optimized] [@clark2018open]
 
-**¿Cómo resolverían el problema?** Mientras que las LSTM miran toda la historia a largo plazo, las CNN extraen patrones a corto plazo. En este caso, una 1D-CNN actua como un "escáner" que puede identificar picos repentinos que los humanos podrían pasar por alto, como una caida y posterior subida de la temperatura basal, lo cual es un indicador clave de la transición hacia la ovulación.
+**¿Cómo resolverían el problema?** Mientras que las LSTM miran toda la historia a largo plazo, las CNN extraen patrones a corto plazo. En este caso, una 1D-CNN actua como un "escáner" que puede identificar picos repentinos que los humanos podrían pasar por alto, como una caida y posterior subida de la temperatura basal, lo cual es un indicador clave de la transición hacia la ovulación. [@khairunisa2025comparison] [@murayama2023determination]
 
 ## Transformers {.smaller}
 
-Originalmente utilizados para el procesamiento de lenguaje natural, ahora se aplican a datos de salud y series temporales. Los Transformers abandonan por completo el procesamiento secuencial paso a paso que usan las LSTM. En su lugar, procesan toda la serie de tiempo de forma simultánea, utilizando un mecanismo matemático llamado *Self-Attention*, el cual calcula una matriz de pesos para evaluar que tanta importancia debe prestarle la red a cada día del ciclo para predecir la fase actual.
+Originalmente utilizados para el procesamiento de lenguaje natural [@mughal2025mai], ahora se aplican a datos de salud [@logapriya2024optimized] y series temporales. Los Transformers abandonan por completo el procesamiento secuencial paso a paso que usan las LSTM [@mughal2025mai]. En su lugar, procesan toda la serie de tiempo de forma simultánea, utilizando un mecanismo matemático llamado *Self-Attention*, el cual calcula una matriz de pesos para evaluar que tanta importancia debe prestarle la red a cada día del ciclo para predecir la fase actual. [@logapriya2024optimized]
 
-**¿Cómo resolverían el problema?** Este método resuelve la limitación de la memoria a largo plazo al crear correlaciones directas entre cualquier par de datos, sin importar que tan separados estén en el tiempo.
+**¿Cómo resolverían el problema?** Este método resuelve la limitación de la memoria a largo plazo al crear correlaciones directas entre cualquier par de datos, sin importar que tan separados estén en el tiempo. [@mughal2025mai]
 
 # Fase 3: Evaluación y métricas de Rendimiento 
 
 ## Métricas de clasificación {.smaller}
 
-Para evaluar si el modelo acierta al clasificar si un día específico corresponde a la fase folicular, lútea o fértil.
+Para evaluar si el modelo acierta al clasificar si un día específico corresponde a la fase folicular, lútea o fértil se utiliza recall, accuracy, matriz de confusión y F1-Score [@harshavardhan2025ai]:
 
 - **Recall (Sensibilidad)**: Capacidad de identificar correctamente todos los verdaderos positivos,
 
@@ -258,7 +260,7 @@ donde $Precision = \frac{VP}{VP + FP}$
 
 ## Métricas de error predictivo {.smaller}
 
-Para medir el error cuando el modelo intente predecir el número de días que faltan para la siguiente menstruación.
+Para medir el error cuando el modelo intente predecir el número de días que faltan para la siguiente menstruación se empleará RMSE, MAE y MAPE [@harshavardhan2025ai] [@khairunisa2025comparison]:
 
 - **Root Mean Square Error (RMSE)**: La Raíz del Error Cuadrático Medio mide la diferencia promedio entre los valores predichos por el modelo ($y_i$) y los valores reales ($\hat{y_i}$)
 
@@ -276,4 +278,19 @@ $MAE = \frac{1}{n} \sum_{i=1}^{n} |y_i - \hat{y_i}|$
 
 $MAPE = \frac{100}{n} \sum_{i=1}^{n} |\frac{y_i - \hat{y_i}}{y_i}|$
 
+# Conclusión
+
+## Próximos pasos e impacto {.smaller}
+
+- **Viabilidad del enfoque:** La revisión del estado del arte confirma que arquitecturas como **LSTM y Transformers** son las herramientas correctar que permiten capturar las dependencias temporales y adaptarse a la variabilidad de ciclos irregulares.
+
+- **Próximos pasos:**
+  - Ejecutar el preprocesamiento de la base de datos, comenzando con la imputación de los valores nulos.
+  - Estructurar temporalmente los datos y entrenar el modelo base.
+
 ## Referencias {.smaller}
+
+<div style="font-size: 0.6em; line-height: 1.2;">
+::: {#refs}
+:::
+</div>

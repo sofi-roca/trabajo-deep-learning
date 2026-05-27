@@ -54,4 +54,5 @@ $presentation-heading-font-weight: 700;
 .reveal .slides p,
 .reveal .slides li {
   text-align: justify;
+  font-size: 0.90em; // <-- AGREGA ESTA LÍNEA (1em es el normal, 0.85em es un 15% más pequeño)
 }
