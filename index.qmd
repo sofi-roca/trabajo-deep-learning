@@ -38,7 +38,7 @@ Universidad de Santiago de Chile
 
 El ciclo menstrual [@msd2024ciclomenstrual] es un proceso biológico continuo que se define anatómica y endocrinológicamente a través de una secuencia cíclica de 4 fases: 
 
-![Fases ciclo menstrual](C:/Users/sofir/OneDrive/Escritorio/Universidad/Deep%20learning/fases_ciclo_2.webp){#fig-etiqueta width="30%" fig-align="center"}
+![Fases ciclo menstrual](fases_ciclo_2.jpg){#fig-etiqueta width="30%" fig-align="center"}
 
 ## Fases del ciclo menstrual {.smaller}
 
