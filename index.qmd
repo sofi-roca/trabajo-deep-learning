@@ -12,23 +12,23 @@ bibliography: referencias.bib
 csl: "https://raw.githubusercontent.com/citation-style-language/styles/master/ieee.csl"
 ---
 
-# Clasificación de las Fases del Ciclo Menstrual {vertical-align="middle" text-align="center"}
+# Ciclo menstrual: Clasificación y predicción de las fases mediante Deep Learning
 
-::: {style="font-size: 0.7em; color: #2D2926; margin-bottom: 50px; letter-spacing: 2px;"}
+::: {style="font-size: 0.6em; color: #2D2926; margin-bottom: 30px; letter-spacing: 2px; text-align: center;"}
 MODELOS DE DEEP LEARNING
 :::
 
 ::::: columns
-::: {.column width="50%"}
+::: {.column width="50%" style="text-align: center;"}
 **Integrantes:** <br> Sofía Roca Contreras <br> Bianca Bruna Ramírez
 :::
 
-::: {.column width="50%"}
+::: {.column width="50%" style="text-align: center;"}
 **Profesor:** <br> Francisco Plaza-Vega
 :::
 :::::
 
-::: {style="margin-top: 60px; font-size: 0.6em; color: #9B4D4D;"}
+::: {style="margin-top: 40px; font-size: 0.55em; color: #9B4D4D; text-align: center;"}
 Universidad de Santiago de Chile
 :::
 
@@ -42,13 +42,13 @@ El ciclo menstrual [@msd2024ciclomenstrual] es un proceso biológico continuo qu
 
 ## Fases del ciclo menstrual {.smaller}
 
-**Fase menstrual:** Es la etapa inicial, donde ocurre el desprendimiento y expulsión del tejido endometrial. Hay una baja en los niveles de estrógeno y progesterona.
+- **Fase menstrual:** Es la etapa inicial, donde ocurre el desprendimiento y expulsión del tejido endometrial. Hay una baja en los niveles de estrógeno y progesterona.
 
-**Fase folicular:** Los niveles de estrógeno aumentan lo que impulsa la reconstrucción del revestimiento uterino y la maduración de lo folículos ováricos.
+- **Fase folicular:** Los niveles de estrógeno aumentan lo que impulsa la reconstrucción del revestimiento uterino y la maduración de lo folículos ováricos.
 
-**Ovulación:** Se alcanza el punto máximo en los niveles de estrógeno y existe aumento repentino de la hormona luteinizante (LH) lo que desencadena la liberación del óvulo.
+- **Ovulación:** Se alcanza el punto máximo en los niveles de estrógeno y existe aumento repentino de la hormona luteinizante (LH) lo que desencadena la liberación del óvulo.
 
-**Fase lútea:** Después de la ovulación, el foliculo vacio se transforma en cuerpo lúteo, secretando progresterona para densificar el endometrio. 
+- **Fase lútea:** Después de la ovulación, el foliculo vacio se transforma en cuerpo lúteo, secretando progresterona para densificar el endometrio. 
 
 ## Ciclos regulares e irregulares {.smaller}
 
@@ -68,9 +68,9 @@ $\text{Variación ciclo} = \text{Ciclo más largo} - \text{Ciclo más corto}$ [@
 
 ## Planteamiento del problema {.smaller}
 
-**Problema:** Los métodos manuales y calendarios asumen ciclos estáticos y regulares. Estos fallan ante alteraciones por estrés, estilo de vida o diagnosticos médicos, además son propensos al error humano.
+**Problema:** Los métodos manuales y calendarios asumen ciclos estáticos y regulares. Estos fallan ante alteraciones por estrés, estilo de vida o diagnósticos médicos, además son propensos al error humano.
 
-Tambien tenemos un desafío computacional, ya que los historiales menstruales conforman series temporales ruidosas, incompletas y con dependencias complejas a largo plazo.
+También tenemos un desafío computacional, ya que los historiales menstruales conforman series temporales ruidosas, incompletas y con dependencias complejas a largo plazo.
 
 Por lo que los algoritmos lineales clásicos son incapaces de procesar y capturar esta variabilidad de manera efectiva
 
@@ -97,7 +97,7 @@ Algunas de las dimensiones que más se ven impactadas al desarrollar un buen mod
 |------------------|------------------|------------------|------------------|
 | **LSTM** [@khairunisa2025comparison] | **90% – 91.3%** | RMSE: 1.7 | Excelente. Modela ciclos irregulares. |
 | **CNN 1D** | **88.9%** | RMSE: 1.9 | Buena: Identifica patrones clave, pero es inferior a LSTM en secuencias largas. |
-| **ML Clásico** [@harshavardhan2025ai] | **78% – 85.2%** | RMSE: 2.3 | Baja. Falla ante ciclos irregualres. |
+| **ML Clásico** [@harshavardhan2025ai] | **78% – 85.2%** | RMSE: 2.3 | Baja. Falla ante ciclos irregulares. |
 :::
 
 \vspace{0.3cm}
@@ -147,7 +147,7 @@ Algunas de las dimensiones que más se ven impactadas al desarrollar un buen mod
 
 # Metodología preliminar
 
-## Métodología preliminar {.smaller}
+## Metodología preliminar {.smaller}
 
 **Fase 1**: Preprocesamiento.
 
@@ -216,9 +216,9 @@ A diferencia de las redes tradicionales, las LSTM tienen una memoria interna (ce
 
 ## 1D-CNN (Redes Neuronales Convolucionales) {.smaller}
 
-Si bien las CNN son conocidas por su aplicación en el reconomiento de imagenes [@khairunisa2025comparison], existe una versión unidimensional (1D-CNN) que se emplea para procesar datos fisiológicos estructurados y series temporales [@clark2018open]. Estas utilizan una operación matemática llamada "convolución". Emplea "kernels" que se deslizan a lo largo de la secuencia de datos y, en cada paso, el filtro extrae "mapas de características" multiplicando los pesos aprendidos por los valores de entrada. Esto crea un resumen de los patrones más importantes.[@logapriya2024optimized] [@clark2018open]
+Si bien las CNN son conocidas por su aplicación en el reconocimiento de imagenes [@khairunisa2025comparison], existe una versión unidimensional (1D-CNN) que se emplea para procesar datos fisiológicos estructurados y series temporales [@clark2018open]. Estas utilizan una operación matemática llamada "convolución". Emplea "kernels" que se deslizan a lo largo de la secuencia de datos y, en cada paso, el filtro extrae "mapas de características" multiplicando los pesos aprendidos por los valores de entrada. Esto crea un resumen de los patrones más importantes.[@logapriya2024optimized] [@clark2018open]
 
-**¿Cómo resolverían el problema?** Mientras que las LSTM miran toda la historia a largo plazo, las CNN extraen patrones a corto plazo. En este caso, una 1D-CNN actua como un "escáner" que puede identificar picos repentinos que los humanos podrían pasar por alto, como una caida y posterior subida de la temperatura basal, lo cual es un indicador clave de la transición hacia la ovulación. [@khairunisa2025comparison] [@murayama2023determination]
+**¿Cómo resolverían el problema?** Mientras que las LSTM miran toda la historia a largo plazo, las CNN extraen patrones a corto plazo. En este caso, una 1D-CNN actúa como un "escáner" que puede identificar picos repentinos que los humanos podrían pasar por alto, como una caída y posterior subida de la temperatura basal, lo cual es un indicador clave de la transición hacia la ovulación. [@khairunisa2025comparison] [@murayama2023determination]
 
 ## Transformers {.smaller}
 
@@ -282,7 +282,7 @@ $MAPE = \frac{100}{n} \sum_{i=1}^{n} |\frac{y_i - \hat{y_i}}{y_i}|$
 
 ## Próximos pasos e impacto {.smaller}
 
-- **Viabilidad del enfoque:** La revisión del estado del arte confirma que arquitecturas como **LSTM y Transformers** son las herramientas correctar que permiten capturar las dependencias temporales y adaptarse a la variabilidad de ciclos irregulares.
+- **Viabilidad del enfoque:** La revisión del estado del arte confirma que arquitecturas como **LSTM y Transformers** son las herramientas correctas que permiten capturar las dependencias temporales y adaptarse a la variabilidad de ciclos irregulares.
 
 - **Próximos pasos:**
   - Ejecutar el preprocesamiento de la base de datos, comenzando con la imputación de los valores nulos.

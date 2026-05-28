@@ -17,6 +17,33 @@ $presentation-heading-font-weight: 700;
 
 /*-- scss:rules --*/
 
+/*-- scss:rules --*/
+
+// Forzar el tamaño del título principal (H1)
+.reveal .slides h1 {
+  font-size: 70px !important;     /* Prueba con 60px. Si sigue grande, baja a 50px */
+  line-height: 1.1 !important;    /* Para que las líneas no estén tan separadas */
+  text-align: left !important;    /* Alineación a la izquierda */
+  margin-bottom: 20px !important;
+  word-wrap: break-word;          /* Evita que las palabras se salgan */
+}
+
+// Si quieres que el subtítulo "MODELOS DE DEEP LEARNING" 
+// también esté alineado a la izquierda sin fallos:
+.reveal .slides .subtitle-manual {
+  text-align: left !important;
+  font-size: 0.6em;
+  color: #2D2926;
+  margin-bottom: 30px;
+  letter-spacing: 2px;
+  display: block; /* Asegura que se comporte como bloque para alinear */
+}
+// Ajuste para que los nombres de los integrantes no queden tan grandes
+.reveal .columns .column {
+  font-size: 0.85em;
+  line-height: 1.4;
+}
+
 // Estilo para el título de la diapositiva
 .reveal .slides h2 {
   border-bottom: 2px solid rgba(155, 77, 77, 0.2);
