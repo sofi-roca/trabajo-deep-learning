@@ -1208,7 +1208,9 @@ Figure 1: Fases ciclo menstrual
 <section id="hipótesis" class="slide level2 smaller">
 <h2>Hipótesis</h2>
 <ul>
-<li>Contrario a métodos tradicionales (como el método del calendario o regresión lineal simple) que asumen ciclos regulares, un modelo de Deep Learning (como LSTM o Transformers) logrará clasificar fases menstruales de personas con ciclos irregulares.</li>
+<li><p>Contrario a métodos tradicionales (como el método del calendario o regresión lineal simple) que asumen ciclos regulares, un modelo de Deep Learning (como LSTM o Transformers) logrará clasificar y predecir fases menstruales de personas con ciclos irregulares.</p></li>
+<li><p>Los modelos basados en mecanismos de atención (Transformers) presentarán un menor error predictivo (RMSE) que las redes recurrentes (LSTM) al procesar secuencias de datos a largo plazo.</p></li>
+<li><p>La integración de técnicas de imputación secuencial (Forward Fill) y multivariante estructurará un conjunto de datos que preservará la varianza biológica original de las usuarias, mitigando el impacto negativo de los registros nulos en el entrenamiento del modelo.</p></li>
 </ul>
 </section>
 <section id="objetivos" class="slide level2 smaller">
@@ -1232,8 +1234,8 @@ Figure 1: Fases ciclo menstrual
 <p><strong>Fase 3</strong>: Evaluación y métricas de rendimiento.</p>
 </section></section>
 <section>
-<section id="fase-1-preprocesamiento" class="title-slide slide level1 center">
-<h1>Fase 1 : Preprocesamiento</h1>
+<section id="fase-1-preprocesamiento-y-estructura-temporal" class="title-slide slide level1 center">
+<h1>Fase 1 : Preprocesamiento y estructura temporal</h1>
 
 </section>
 <section id="preprocesamiento" class="slide level2 smaller">
@@ -1458,6 +1460,15 @@ Figure 1: Fases ciclo menstrual
 <li><p><strong>Imputación por Media o Mediana</strong>: En lugar de rellenar con ceros, usar el promedio o mediana del paciente, es decir, utilizar su propio historial.</p></li>
 <li><p><strong>Imputación Múltiple (Machine Learning):</strong> Para variables donde no existe historial previo, se empleará el paquete <em>mice</em> de R (Multivariate Imputation by Chained Equations). Este algoritmo evalúa el comportamiento de pacientes con perfiles fisiológicos similares para estimar el valor faltante con alta precisión estadística.</p></li>
 </ul>
+</section>
+<section id="estructura-temporal-de-los-datos" class="slide level2 smaller">
+<h2>Estructura temporal de los datos</h2>
+<p>Los modelos de Deep Learning requieren comprender el paso del tiempo. Se aplicará la técnica de <strong>Ventanas Deslizantes (Sliding Windows)</strong>:</p>
+<ul>
+<li><strong>Formateo de secuencias:</strong> Se agruparán los registros históricos de cada paciente en bloques secuenciales (por ejemplo, <em>lookback</em> de 3 a 5 ciclos previos).</li>
+<li><strong>Matriz tridimensional:</strong> Los datos tabulares en 2D (pacientes vs. variables) se transformarán en tensores 3D con la forma <code>[Muestras, Pasos de tiempo, Características]</code>.</li>
+<li><strong>Justificación:</strong> Esto permite que las capas de la red (LSTM o CNN) evalúen explícitamente cómo la duración o intensidad del ciclo <span class="math inline">\(t-1\)</span> afecta la fase del ciclo <span class="math inline">\(t\)</span>.</li>
+</ul>
 </section></section>
 <section>
 <section id="fase-2-diseño-conceptual-de-la-arquitectura-del-modelo" class="title-slide slide level1 center">
@@ -1473,7 +1484,7 @@ Figure 1: Fases ciclo menstrual
 <section id="d-cnn-redes-neuronales-convolucionales" class="slide level2 smaller">
 <h2>1D-CNN (Redes Neuronales Convolucionales)</h2>
 <p>Si bien las CNN son conocidas por su aplicación en el reconocimiento de imagenes <span class="citation" data-cites="khairunisa2025comparison"><a href="#/referencias" role="doc-biblioref" onclick>[3]</a></span>, existe una versión unidimensional (1D-CNN) que se emplea para procesar datos fisiológicos estructurados y series temporales <span class="citation" data-cites="clark2018open"><a href="#/referencias" role="doc-biblioref" onclick>[9]</a></span>. Estas utilizan una operación matemática llamada “convolución”. Emplea “kernels” que se deslizan a lo largo de la secuencia de datos y, en cada paso, el filtro extrae “mapas de características” multiplicando los pesos aprendidos por los valores de entrada. Esto crea un resumen de los patrones más importantes.<span class="citation" data-cites="logapriya2024optimized"><a href="#/referencias" role="doc-biblioref" onclick>[6]</a></span> <span class="citation" data-cites="clark2018open"><a href="#/referencias" role="doc-biblioref" onclick>[9]</a></span></p>
-<p><strong>¿Cómo resolverían el problema?</strong> Mientras que las LSTM miran toda la historia a largo plazo, las CNN extraen patrones a corto plazo. En este caso, una 1D-CNN actúa como un “escáner” que puede identificar picos repentinos que los humanos podrían pasar por alto, como una caída y posterior subida de la temperatura basal, lo cual es un indicador clave de la transición hacia la ovulación. <span class="citation" data-cites="khairunisa2025comparison"><a href="#/referencias" role="doc-biblioref" onclick>[3]</a></span> <span class="citation" data-cites="murayama2023determination"><a href="#/referencias" role="doc-biblioref" onclick>[5]</a></span></p>
+<p><strong>¿Cómo resolverían el problema?</strong> Mientras que las LSTM miran toda la historia a largo plazo, las CNN extraen patrones a corto plazo. En este caso, una 1D-CNN actúa como un “escáner” que puede identificar fluctuaciones agudas que los humanos podrían pasar por alto, como variaciones bruscas en la intensidad media de sangrado entre ciclos consecutivos o la concentración de los días de peak de fertilidad, lo cual es un indicador clave de la transición hacia la ovulación. <span class="citation" data-cites="khairunisa2025comparison"><a href="#/referencias" role="doc-biblioref" onclick>[3]</a></span> <span class="citation" data-cites="murayama2023determination"><a href="#/referencias" role="doc-biblioref" onclick>[5]</a></span></p>
 </section>
 <section id="transformers" class="slide level2 smaller">
 <h2>Transformers</h2>
