@@ -38,7 +38,7 @@ Universidad de Santiago de Chile
 
 El ciclo menstrual [@msd2024ciclomenstrual] es un proceso biológico continuo que se define anatómica y endocrinológicamente a través de una secuencia cíclica de 4 fases: 
 
-![Fases ciclo menstrual](fases_ciclo_2.jpg){#fig-etiqueta width="30%" fig-align="center"}
+![Fases ciclo menstrual](fases_ciclo_4.jpg){#fig-etiqueta width="30%" fig-align="center"}
 
 ## Fases del ciclo menstrual {.smaller}
 
@@ -133,7 +133,11 @@ Algunas de las dimensiones que más se ven impactadas al desarrollar un buen mod
 
 ## Hipótesis {.smaller}
 
-- Contrario a métodos tradicionales (como el método del calendario o regresión lineal simple) que asumen ciclos regulares, un modelo de Deep Learning (como LSTM o Transformers) logrará clasificar fases menstruales de personas con ciclos irregulares.
+- Contrario a métodos tradicionales (como el método del calendario o regresión lineal simple) que asumen ciclos regulares, un modelo de Deep Learning (como LSTM o Transformers) logrará clasificar y predecir fases menstruales de personas con ciclos irregulares.
+
+- Los modelos basados en mecanismos de atención (Transformers) presentarán un menor error predictivo (RMSE) que las redes recurrentes (LSTM) al procesar secuencias de datos a largo plazo.
+
+- La integración de técnicas de imputación secuencial (Forward Fill) y multivariante estructurará un conjunto de datos que preservará la varianza biológica original de las usuarias, mitigando el impacto negativo de los registros nulos en el entrenamiento del modelo.
 
 ## Objetivos {.smaller}
 
@@ -155,7 +159,7 @@ Algunas de las dimensiones que más se ven impactadas al desarrollar un buen mod
 
 **Fase 3**: Evaluación y métricas de rendimiento.
 
-# Fase 1 : Preprocesamiento 
+# Fase 1 : Preprocesamiento y estructura temporal
 
 ## Preprocesamiento {.smaller}
 
@@ -204,6 +208,14 @@ Visualización de las primeras 5 observaciones de la base de datos.
 
 - **Imputación Múltiple (Machine Learning):** Para variables donde no existe historial previo, se empleará el paquete *mice* de R (Multivariate Imputation by Chained Equations). Este algoritmo evalúa el comportamiento de pacientes con perfiles fisiológicos similares para estimar el valor faltante con alta precisión estadística.
 
+## Estructura temporal de los datos {.smaller}
+
+Los modelos de Deep Learning requieren comprender el paso del tiempo. Se aplicará la técnica de **Ventanas Deslizantes (Sliding Windows)**:
+
+- **Formateo de secuencias:** Se agruparán los registros históricos de cada paciente en bloques secuenciales (por ejemplo, *lookback* de 3 a 5 ciclos previos).
+- **Matriz tridimensional:** Los datos tabulares en 2D (pacientes vs. variables) se transformarán en tensores 3D con la forma `[Muestras, Pasos de tiempo, Características]`.
+- **Justificación:** Esto permite que las capas de la red (LSTM o CNN) evalúen explícitamente cómo la duración o intensidad del ciclo $t-1$ afecta la fase del ciclo $t$.
+
 # Fase 2: Diseño Conceptual de la Arquitectura del Modelo
 
 ## Redes LSTM (Long Short-Term Memory) {.smaller}
@@ -218,7 +230,7 @@ A diferencia de las redes tradicionales, las LSTM tienen una memoria interna (ce
 
 Si bien las CNN son conocidas por su aplicación en el reconocimiento de imagenes [@khairunisa2025comparison], existe una versión unidimensional (1D-CNN) que se emplea para procesar datos fisiológicos estructurados y series temporales [@clark2018open]. Estas utilizan una operación matemática llamada "convolución". Emplea "kernels" que se deslizan a lo largo de la secuencia de datos y, en cada paso, el filtro extrae "mapas de características" multiplicando los pesos aprendidos por los valores de entrada. Esto crea un resumen de los patrones más importantes.[@logapriya2024optimized] [@clark2018open]
 
-**¿Cómo resolverían el problema?** Mientras que las LSTM miran toda la historia a largo plazo, las CNN extraen patrones a corto plazo. En este caso, una 1D-CNN actúa como un "escáner" que puede identificar picos repentinos que los humanos podrían pasar por alto, como una caída y posterior subida de la temperatura basal, lo cual es un indicador clave de la transición hacia la ovulación. [@khairunisa2025comparison] [@murayama2023determination]
+**¿Cómo resolverían el problema?** Mientras que las LSTM miran toda la historia a largo plazo, las CNN extraen patrones a corto plazo. En este caso, una 1D-CNN actúa como un "escáner" que puede identificar fluctuaciones agudas que los humanos podrían pasar por alto, como variaciones bruscas en la intensidad media de sangrado entre ciclos consecutivos o la concentración de los días de peak de fertilidad, lo cual es un indicador clave de la transición hacia la ovulación. [@khairunisa2025comparison] [@murayama2023determination]
 
 ## Transformers {.smaller}
 
