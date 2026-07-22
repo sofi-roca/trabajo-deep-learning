@@ -305,7 +305,7 @@ bscols(
 ```
 
 
-## Metodología preliminar {.smaller}
+## Metodología {.smaller}
 
 ::::: {.columns}
 
@@ -322,6 +322,12 @@ bscols(
    - Codificación.
    - Estructura temporal.
 
+- **Fase 3**: Arquitectura de modelos.
+   - Modelos de referencia.
+   - CNN 1D.
+   - LSTM.
+   - Capa de salida.
+   
 ::::
 
 :::: {.column width="6%"}
@@ -330,11 +336,6 @@ bscols(
 
 :::: {.column width="47%"}
 
-- **Fase 3**: Selección y arquitectura de modelos.
-   - Modelos de referencia.
-   - CNN 1D.
-   - LSTM.
-   - Capa de salida.
 
 - **Fase 4**: Entrenamiento.
    - División de los datos.
