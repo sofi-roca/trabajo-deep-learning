@@ -68,7 +68,7 @@ El ciclo menstrual [@msd2024ciclomenstrual] es un proceso biológico continuo qu
 
 - La variación entre el ciclo más largo y el más corto es mayor a 9 días en un periodo de 6 meses.
 
-$\text{Variación ciclo} = \text{Ciclo más largo} - \text{Ciclo más corto}$ [@munro2022figo]
+Variación ciclo = Ciclo más largo - Ciclo más corto [@munro2022figo]
 
 # Planteamiento del problema
 
@@ -139,39 +139,29 @@ Algunas de las dimensiones que más se ven impactadas al desarrollar un buen mod
 
 ## Hipótesis {.smaller}
 
-- Contrario a métodos tradicionales (como el método del calendario o regresión lineal simple) que asumen ciclos regulares, un modelo de Deep Learning (como LSTM o Transformers) logrará clasificar y predecir fases menstruales de personas con ciclos irregulares.
+**Hipótesis principal**:  Contrario a métodos tradicionales (como el método del calendario o regresión lineal) que asumen ciclos mentruales regulares, un modelo de Deep Learning enfocadas en secuencias temporales (como LSTM y 1D-CNN) logrará clasificar de manera precisa en que fase se encuentra una persona, adaptándose a usuarias con ciclos irregulares.
 
-- Los modelos basados en mecanismos de atención (Transformers) presentarán un menor error predictivo (RMSE) que las redes recurrentes (LSTM) al procesar secuencias de datos a largo plazo.
+**Hipótesis secundarias**:
 
-- La integración de técnicas de imputación secuencial (Forward Fill) y multivariante estructurará un conjunto de datos que preservará la varianza biológica original de las usuarias, mitigando el impacto negativo de los registros nulos en el entrenamiento del modelo.
+- Los modelos de Deep Learning, como el modelo de clasificación *many-to-one*, superarán a los algoritmos tradicionales de Machine Learning en la clasificación de las tres clases (Menstrual/Folicular, Ovulatoria y Lútea), mostrando un desempeño superior al ser evaluadas bajo métricas para clasificación.
+
+- El aplicar técnicas de imputación de datos, mitigará el impacto negativo de los registros nulos en historiales clínicos incompletos, preservando la varianza biológica original de las usuarias y previniendo la alteración de las dependencias a largo plazo necesarias para el entrenamiento de la red LSTM.
 
 ## Objetivos {.smaller}
 
-**Objetivo general:** Analizar y fundamentar la selección de modelos de Deep Learning para clasificar las fases del ciclo menstrual y que sea capaz de adaptarse a ciclos irregulares.
+**Objetivo general:** Desarrollar, implementar y evaluar un sistema de clasificación basado en arquitecturas de Deep Learning secuenciales, capaz de determinar con alta precisión la fase del ciclo menstrual de una usuaria, modelando las dependencias temporales y la variabilidad presente en ciclos irregulares.
 
 **Objetivos específicos:**
 
-- **Preprocesar y estructurar datos fisiológicos secuenciales:** Limpiar y estructurar una base de datos que contiene variables temporales y aplicar técnicas de imputación para los valores faltantes.
+- Ejecutar un código de preprocesamiento para datos secuenciales que incluya la limpueza e imputación, la normalización de escalas numericas y la codificación *One-Hot* de las variables objetivo, transformando la base de datos tabular en estructura de tensores 3D mediante ventanas temporales.
 
-- **Explicar las métricas para validar la precisión del modelo:** Definir métricas de rendimiento para asegurar la validación del modelo.
+- Construir modelos de redes neuronales (1D-CNN y LSTM) estructurados bajo una arquitectura *Many-to-One* con una capa de salida *Softmax* de 3 clases, aplicando técnicas para evitar el sobreajuste en los datos irregulares.
+
+- Comparar el rendimiento predictivo de las arquitecturas propuestas frente a modelos de referencia clásicos de Machine Learning, validando la capacidad de clasificación mediante el análisis de la matriz de confunsión y otrás métricas tales como la sensibilidad, la exactitud y el F1-Score. 
 
 # Metodología preliminar
 
-## Metodología preliminar {.smaller}
-
-- **Fase 1**: Definición del problema.
-
-- **Fase 2**: Preprocesamiento de datos.
-
-- **Fase 3**: Selección y arquitectura de modelos.
-
-- **Fase 4**: Entrenamiento.
-
-- **Fase 5**: Métricas de evaluación.
-
-# Fase 1: Definición del problema
-
-## Base de datos {.smaller}
+# Base de datos {.smaller}
 
 **Base de datos** de 80 variables y 1665 observaciones extraida de [Kaggle](https://www.kaggle.com/datasets/nikitabisht/menstrual-cycle-data)
 
@@ -196,24 +186,7 @@ Registros de ciclos menstruales de 159 personas.
 | duracion_fase_lutea | Duración de la fase lútea (post-ovulación) | Entero |
 :::
 
-
-## Definición del problema {.smaller}
-
-**Enfoque del problema**: Definir el problema como una tarea de clasificación multiclase con una arquitectura de red neuronal tipo *many-to-one* donde se ingresa una secuencia histórica de días para predecir una única fase para el día actual.
-
-**Definición de las clases**: Computacionalmente se definen tres clases mutuamente excluyentes debido al comportamiento de la temperatura basal y las hormonas:
-
-- Clase 1: Fase Menstrual/Folicular (Se agrupan porque comparte la misma baja térmica y hormonal).
-
-- Clase 2: Fase Ovulatoria (El peak de transición).
-
-- Clase 3: Fase Lútea (Temperatura y progesterona elevadas previas al siguiente sangrado).
-
-**Seleccionar características**: Separar las variables de entrada en estáticas, históricas y dinámicas secuenciales.
-
-# Fase 2: Preprocesamiento de datos 
-
-## Preprocesamiento de datos {.smaller}
+## Visualización {.smaller}
 
 Visualización de las primeras 5 observaciones de la base de datos.
 
@@ -227,91 +200,71 @@ Visualización de las primeras 5 observaciones de la base de datos.
 | nfp8122 | 5 | NA | NA | 28 | NA | 5 | NA | NA | 12 | 4 | 2 | 16 | 12 |
 :::
 
-**Limpieza e imputación de datos faltantes**: Se deben aplicar técnicas de imputación agrupadas por paciente. Tales como:
+![Sencuencia tempora](secuencia_temporal.png){#fig-etiqueta fig-align="center"}
 
-- **Relleno hacia adelante** (Forward Fill) utilizando la función *fill* del paquete *tidyr*.
-
-- **Imputación por Media o Mediana**: En lugar de rellenar con ceros, usar el promedio o mediana del paciente, es decir, utilizar su propio historial.
-
-- **Imputación Múltiple (Machine Learning):** Para variables donde no existe historial previo, se empleará el paquete *mice* de R (Multivariate Imputation by Chained Equations). Este algoritmo evalúa el comportamiento de pacientes con perfiles fisiológicos similares para estimar el valor faltante con alta precisión estadística.
-
-## Preprocesamiento de datos {.smaller}
-
-**Normalización**: Las redes neuronales, en particular las redes LSTM, son sensibles a la escala de los datos. Se debe aplicar una estandarización para llevar variables dispares a un rango comparable. 
-
-**Codificación One-Hot**: La variable objetivo debe transformarse a un formato *One-Hot Encoding* para que sea compatible con las redes neuronales de clasificación.
-
-**Ventanas temporales**: La base de datos se debe convertir en secuencias de series de tiempo utilizando *ventanas móviles*.
-
-# Fase 3: Selección y arquitectura de modelos
-
-## Arquitectura de modelos {.smaller}
-
-- **Modelos de referencias (Machine Learning)**: Incluir algoritmos como *Random Forest* o *Support Vector Machine*, utilizados como línea base.
-
-- **1D-CNN (Redes Convolucionales Unidimensionales)**: Actúa como un extractor automático de características. Desliza un filtro matemático sobre la secuencia temporal diaria para identificar patrones locales y cambios abruptos en los datos estructurados.
-
-- **LSTM (Long Short-Term Memory)**: Arquitectura de red neuronal recurrente especializada en datos secuenciales. Utiliza un mecanismo de compuertas y estado de celda para mantener una memoria a largo plazo, logrando capturar las dependencias temporales complejas a través de los ciclos menstruales irregulares.
-
-- **Capa de salida**:
-
-1. **Capa densa**: El resultado de la LSTM pasa por un perceptrón multicapa tradicional. Aquí, la red toma todo lo que aprendió sobre el historia de la paciente.
-
-2. **Activación Softmax**: En la capa final, como se tienen 3 clases, se deben usar 3 neuronas de salida con la función de activación *Softmax* la cual va a convertir los datos en una distribución de probabilidades.
-
-# Fase 4: Entrenamiento
-
-## Entrenamiento {.smaller}
-
-- **División de los datos**: Utilizar un porcentaje para entrenamiento, otro para validación y un último para prueba.
-
-- **Desbalance**: Como la fase ovulatoria dura entre 1 a 2 días, frente a, por ejemplo, la fase folicular que dura semanas, se deben aplicar los pesos ajustados durante el entrenamiento.
-
-- **Regularización**: Incorporar *dropout* y *early stopping*. 
-
-# Fase 5: Métricas de evaluación
-
-## Métricas de clasificación {.smaller}
-
-Para evaluar si el modelo acierta al clasificar si un día específico corresponde a la fase folicular, lútea o fértil se utiliza recall, accuracy, matriz de confusión y F1-Score [@harshavardhan2025ai]:
+## Metodología preliminar {.smaller}
 
 ::::: {.columns}
 
-:::: {.column width="38%"}
-- **Recall (Sensibilidad)**: Capacidad de identificar correctamente todos los verdaderos positivos.
-  
-  $Recall = \frac{VP}{VP + FN}$
+:::: {.column width="47%"}
 
-- **Accuracy (Exactitud)**: Exactitud global.
-  
-  $Accuracy = \frac{VP + VN}{VP + FP + FN + VN}$
+- **Fase 1**: Definición del problema.
+   - Enfoque del problema.
+   - Definir las clases, es decir, las clasificaciones.
+   - Seleccionar las variables.
+
+- **Fase 2**: Preprocesamiento de datos.
+   - Limpieza e imputación de datos faltantes.
+   - Normalización.
+   - Codificación.
+   - Estructura temporal.
+
 ::::
 
-:::: {.column width="4%"}
-<!-- Esta es una columna invisible que hace de separador -->
+:::: {.column width="6%"}
+<!-- Columna invisible para separar -->
 ::::
 
-:::: {.column width="58%"}
-- **Matriz de confusión**: Visualización de errores.
+:::: {.column width="47%"}
 
-  ::: {style="font-size: 60%;"}
-  | Real <br> Predicción | Predice:<br>Folicular | Predice:<br>Ovulatoria | Predice:<br>Lútea |
-  |------------------|------------------|------------------|------------------|
-  | **Real:<br>Folicular** | VP (Folic.) | FN (Folic.) /<br>FP (Ovul.) | FN (Folic.) /<br>FP (Lútea) |
-  | **Real:<br>Ovulatoria** | FN (Ovul.) /<br>FP (Folic.) | VP (Ovul.) | FN (Ovul.) /<br>FP (Lútea) |
-  | **Real:<br>Lútea** | FN (Lútea) /<br>FP (Folic.) | FN (Lútea) /<br>FP (Ovul.) | VP (Lútea) |
-  :::
+- **Fase 3**: Selección y arquitectura de modelos.
+   - Modelos de referencia.
+   - CNN 1D.
+   - LSTM.
+   - Capa de salida.
 
-- **F1-Score**: Media armónica entre precisión y sensibilidad. Varia entre 0 (peor) y 1 (perfecto).
-  
-  $F1 = 2 \cdot \frac{Precision \cdot Recall}{Precision + Recall}$
-  
-  donde $Precision = \frac{VP}{VP + FP}$
+- **Fase 4**: Entrenamiento.
+   - División de los datos.
+   - Tratamiento del desbalance.
+
+- **Fase 5**: Métricas de evaluación.
+   - Sensibilidad.
+   - Exactitud.
+   - Matriz de confusión.
+   - F1-Score.
+
 ::::
 
 :::::
 
-## Referencias {.smaller}
+# Conclusión
+
+## Conclusiones y Próximos Pasos {.smaller}
+
+- El uso de arquitecturas secuenciales (LSTM y 1D-CNN) permite capturar dependencias a largo plazo, esenciales para modelar ciclos irregulares.
+
+- La formulación del problema como una clasificación *Many-to-One* asegura que 
+
+- Más allá del rendimiento del algoritmo, 
+
+- **Próximos pasos**: Ejecutar el preprocesamiento, entrenar las arquitecturas propuestas y validar los modelos. 
+
+- **Superación de los métodos clásicos:** El uso de arquitecturas secuenciales (LSTM y 1D-CNN) permite abandonar la rigidez del método del calendario, capturando las dependencias a largo plazo esenciales para modelar ciclos irregulares.
+- **Rigor metodológico:** La formulación del problema como una clasificación multiclase (*Many-to-One*) asegura que la evaluación se realice con métricas probabilísticas robustas (F1-Score), descartando errores continuos inapropiados.
+- **Impacto clínico e integral:** Más allá del rendimiento algorítmico, este sistema habilita la planificación familiar precisa, el manejo proactivo de síntomas y la generación de intervenciones nutricionales personalizadas [3].
+- **Próximos pasos:** Ejecutar el preprocesamiento, entrenar las arquitecturas propuestas y validar empíricamente la superación de la línea base (Machine Learning clásico).
+
+## Referencias
 
 <div style="font-size: 0.6em; line-height: 1.2;">
 ::: {#refs}

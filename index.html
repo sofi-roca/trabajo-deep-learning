@@ -1059,7 +1059,7 @@ Figure 1: Fases ciclo menstrual
 <li><p>Es más largo de 38 días (Oligomenorrea).</p></li>
 <li><p>La variación entre el ciclo más largo y el más corto es mayor a 9 días en un periodo de 6 meses.</p></li>
 </ul>
-<p><span class="math inline">\(\text{Variación ciclo} = \text{Ciclo más largo} - \text{Ciclo más corto}\)</span> <span class="citation" data-cites="munro2022figo"><a href="#/referencias" role="doc-biblioref" onclick>[2]</a></span></p>
+<p>Variación ciclo = Ciclo más largo - Ciclo más corto <span class="citation" data-cites="munro2022figo"><a href="#/referencias" role="doc-biblioref" onclick>[2]</a></span></p>
 </section></section>
 <section>
 <section id="planteamiento-del-problema" class="title-slide slide level1 center">
@@ -1215,43 +1215,31 @@ Figure 1: Fases ciclo menstrual
 </section>
 <section id="hipótesis" class="slide level2 smaller">
 <h2>Hipótesis</h2>
+<p><strong>Hipótesis principal</strong>: Contrario a métodos tradicionales (como el método del calendario o regresión lineal) que asumen ciclos mentruales regulares, un modelo de Deep Learning enfocadas en secuencias temporales (como LSTM y 1D-CNN) logrará clasificar de manera precisa en que fase se encuentra una persona, adaptándose a usuarias con ciclos irregulares.</p>
+<p><strong>Hipótesis secundarias</strong>:</p>
 <ul>
-<li><p>Contrario a métodos tradicionales (como el método del calendario o regresión lineal simple) que asumen ciclos regulares, un modelo de Deep Learning (como LSTM o Transformers) logrará clasificar y predecir fases menstruales de personas con ciclos irregulares.</p></li>
-<li><p>Los modelos basados en mecanismos de atención (Transformers) presentarán un menor error predictivo (RMSE) que las redes recurrentes (LSTM) al procesar secuencias de datos a largo plazo.</p></li>
-<li><p>La integración de técnicas de imputación secuencial (Forward Fill) y multivariante estructurará un conjunto de datos que preservará la varianza biológica original de las usuarias, mitigando el impacto negativo de los registros nulos en el entrenamiento del modelo.</p></li>
+<li><p>Los modelos de Deep Learning, como el modelo de clasificación <em>many-to-one</em>, superarán a los algoritmos tradicionales de Machine Learning en la clasificación de las tres clases (Menstrual/Folicular, Ovulatoria y Lútea), mostrando un desempeño superior al ser evaluadas bajo métricas para clasificación.</p></li>
+<li><p>El aplicar técnicas de imputación de datos, mitigará el impacto negativo de los registros nulos en historiales clínicos incompletos, preservando la varianza biológica original de las usuarias y previniendo la alteración de las dependencias a largo plazo necesarias para el entrenamiento de la red LSTM.</p></li>
 </ul>
 </section>
 <section id="objetivos" class="slide level2 smaller">
 <h2>Objetivos</h2>
-<p><strong>Objetivo general:</strong> Analizar y fundamentar la selección de modelos de Deep Learning para clasificar las fases del ciclo menstrual y que sea capaz de adaptarse a ciclos irregulares.</p>
+<p><strong>Objetivo general:</strong> Desarrollar, implementar y evaluar un sistema de clasificación basado en arquitecturas de Deep Learning secuenciales, capaz de determinar con alta precisión la fase del ciclo menstrual de una usuaria, modelando las dependencias temporales y la variabilidad presente en ciclos irregulares.</p>
 <p><strong>Objetivos específicos:</strong></p>
 <ul>
-<li><p><strong>Preprocesar y estructurar datos fisiológicos secuenciales:</strong> Limpiar y estructurar una base de datos que contiene variables temporales y aplicar técnicas de imputación para los valores faltantes.</p></li>
-<li><p><strong>Explicar las métricas para validar la precisión del modelo:</strong> Definir métricas de rendimiento para asegurar la validación del modelo.</p></li>
+<li><p>Ejecutar un código de preprocesamiento para datos secuenciales que incluya la limpueza e imputación, la normalización de escalas numericas y la codificación <em>One-Hot</em> de las variables objetivo, transformando la base de datos tabular en estructura de tensores 3D mediante ventanas temporales.</p></li>
+<li><p>Construir modelos de redes neuronales (1D-CNN y LSTM) estructurados bajo una arquitectura <em>Many-to-One</em> con una capa de salida <em>Softmax</em> de 3 clases, aplicando técnicas para evitar el sobreajuste en los datos irregulares.</p></li>
+<li><p>Comparar el rendimiento predictivo de las arquitecturas propuestas frente a modelos de referencia clásicos de Machine Learning, validando la capacidad de clasificación mediante el análisis de la matriz de confunsión y otrás métricas tales como la sensibilidad, la exactitud y el F1-Score.</p></li>
 </ul>
 </section></section>
-<section>
 <section id="metodología-preliminar" class="title-slide slide level1 center">
 <h1>Metodología preliminar</h1>
 
 </section>
-<section id="metodología-preliminar-1" class="slide level2 smaller">
-<h2>Metodología preliminar</h2>
-<ul>
-<li><p><strong>Fase 1</strong>: Definición del problema.</p></li>
-<li><p><strong>Fase 2</strong>: Preprocesamiento de datos.</p></li>
-<li><p><strong>Fase 3</strong>: Selección y arquitectura de modelos.</p></li>
-<li><p><strong>Fase 4</strong>: Entrenamiento.</p></li>
-<li><p><strong>Fase 5</strong>: Métricas de evaluación.</p></li>
-</ul>
-</section></section>
-<section>
-<section id="fase-1-definición-del-problema" class="title-slide slide level1 center">
-<h1>Fase 1: Definición del problema</h1>
 
-</section>
-<section id="base-de-datos" class="slide level2 smaller">
-<h2>Base de datos</h2>
+<section>
+<section id="base-de-datos" class="title-slide slide level1 smaller center">
+<h1>Base de datos</h1>
 <p><strong>Base de datos</strong> de 80 variables y 1665 observaciones extraida de <a href="https://www.kaggle.com/datasets/nikitabisht/menstrual-cycle-data">Kaggle</a></p>
 <p>Registros de ciclos menstruales de 159 personas.</p>
 <div style="font-size: 52%;">
@@ -1343,24 +1331,8 @@ Figure 1: Fases ciclo menstrual
 </table>
 </div>
 </section>
-<section id="definición-del-problema" class="slide level2 smaller">
-<h2>Definición del problema</h2>
-<p><strong>Enfoque del problema</strong>: Definir el problema como una tarea de clasificación multiclase con una arquitectura de red neuronal tipo <em>many-to-one</em> donde se ingresa una secuencia histórica de días para predecir una única fase para el día actual.</p>
-<p><strong>Definición de las clases</strong>: Computacionalmente se definen tres clases mutuamente excluyentes debido al comportamiento de la temperatura basal y las hormonas:</p>
-<ul>
-<li><p>Clase 1: Fase Menstrual/Folicular (Se agrupan porque comparte la misma baja térmica y hormonal).</p></li>
-<li><p>Clase 2: Fase Ovulatoria (El peak de transición).</p></li>
-<li><p>Clase 3: Fase Lútea (Temperatura y progesterona elevadas previas al siguiente sangrado).</p></li>
-</ul>
-<p><strong>Seleccionar características</strong>: Separar las variables de entrada en estáticas, históricas y dinámicas secuenciales.</p>
-</section></section>
-<section>
-<section id="fase-2-preprocesamiento-de-datos" class="title-slide slide level1 center">
-<h1>Fase 2: Preprocesamiento de datos</h1>
-
-</section>
-<section id="preprocesamiento-de-datos" class="slide level2 smaller">
-<h2>Preprocesamiento de datos</h2>
+<section id="visualización" class="slide level2 smaller">
+<h2>Visualización</h2>
 <p>Visualización de las primeras 5 observaciones de la base de datos.</p>
 <div style="font-size: 45%; overflow-x: auto;">
 <table class="caption-top" style="width:100%;">
@@ -1482,114 +1454,72 @@ Figure 1: Fases ciclo menstrual
 </tbody>
 </table>
 </div>
-<p><strong>Limpieza e imputación de datos faltantes</strong>: Se deben aplicar técnicas de imputación agrupadas por paciente. Tales como:</p>
-<ul>
-<li><p><strong>Relleno hacia adelante</strong> (Forward Fill) utilizando la función <em>fill</em> del paquete <em>tidyr</em>.</p></li>
-<li><p><strong>Imputación por Media o Mediana</strong>: En lugar de rellenar con ceros, usar el promedio o mediana del paciente, es decir, utilizar su propio historial.</p></li>
-<li><p><strong>Imputación Múltiple (Machine Learning):</strong> Para variables donde no existe historial previo, se empleará el paquete <em>mice</em> de R (Multivariate Imputation by Chained Equations). Este algoritmo evalúa el comportamiento de pacientes con perfiles fisiológicos similares para estimar el valor faltante con alta precisión estadística.</p></li>
-</ul>
-</section>
-<section id="preprocesamiento-de-datos-1" class="slide level2 smaller">
-<h2>Preprocesamiento de datos</h2>
-<p><strong>Normalización</strong>: Las redes neuronales, en particular las redes LSTM, son sensibles a la escala de los datos. Se debe aplicar una estandarización para llevar variables dispares a un rango comparable.</p>
-<p><strong>Codificación One-Hot</strong>: La variable objetivo debe transformarse a un formato <em>One-Hot Encoding</em> para que sea compatible con las redes neuronales de clasificación.</p>
-<p><strong>Ventanas temporales</strong>: La base de datos se debe convertir en secuencias de series de tiempo utilizando <em>ventanas móviles</em>.</p>
-</section></section>
-<section>
-<section id="fase-3-selección-y-arquitectura-de-modelos" class="title-slide slide level1 center">
-<h1>Fase 3: Selección y arquitectura de modelos</h1>
 
-</section>
-<section id="arquitectura-de-modelos" class="slide level2 smaller">
-<h2>Arquitectura de modelos</h2>
-<ul>
-<li><p><strong>Modelos de referencias (Machine Learning)</strong>: Incluir algoritmos como <em>Random Forest</em> o <em>Support Vector Machine</em>, utilizados como línea base.</p></li>
-<li><p><strong>1D-CNN (Redes Convolucionales Unidimensionales)</strong>: Actúa como un extractor automático de características. Desliza un filtro matemático sobre la secuencia temporal diaria para identificar patrones locales y cambios abruptos en los datos estructurados.</p></li>
-<li><p><strong>LSTM (Long Short-Term Memory)</strong>: Arquitectura de red neuronal recurrente especializada en datos secuenciales. Utiliza un mecanismo de compuertas y estado de celda para mantener una memoria a largo plazo, logrando capturar las dependencias temporales complejas a través de los ciclos menstruales irregulares.</p></li>
-<li><p><strong>Capa de salida</strong>:</p></li>
-</ul>
-<ol type="1">
-<li><p><strong>Capa densa</strong>: El resultado de la LSTM pasa por un perceptrón multicapa tradicional. Aquí, la red toma todo lo que aprendió sobre el historia de la paciente.</p></li>
-<li><p><strong>Activación Softmax</strong>: En la capa final, como se tienen 3 clases, se deben usar 3 neuronas de salida con la función de activación <em>Softmax</em> la cual va a convertir los datos en una distribución de probabilidades.</p></li>
-</ol>
-</section></section>
-<section>
-<section id="fase-4-entrenamiento" class="title-slide slide level1 center">
-<h1>Fase 4: Entrenamiento</h1>
-
-</section>
-<section id="entrenamiento" class="slide level2 smaller">
-<h2>Entrenamiento</h2>
-<ul>
-<li><p><strong>División de los datos</strong>: Utilizar un porcentaje para entrenamiento, otro para validación y un último para prueba.</p></li>
-<li><p><strong>Desbalance</strong>: Como la fase ovulatoria dura entre 1 a 2 días, frente a, por ejemplo, la fase folicular que dura semanas, se deben aplicar los pesos ajustados durante el entrenamiento.</p></li>
-<li><p><strong>Regularización</strong>: Incorporar <em>dropout</em> y <em>early stopping</em>.</p></li>
-</ul>
-</section></section>
-<section>
-<section id="fase-5-métricas-de-evaluación" class="title-slide slide level1 center">
-<h1>Fase 5: Métricas de evaluación</h1>
-
-</section>
-<section id="métricas-de-clasificación" class="slide level2 smaller">
-<h2>Métricas de clasificación</h2>
-<p>Para evaluar si el modelo acierta al clasificar si un día específico corresponde a la fase folicular, lútea o fértil se utiliza recall, accuracy, matriz de confusión y F1-Score <span class="citation" data-cites="harshavardhan2025ai"><a href="#/referencias" role="doc-biblioref" onclick>[4]</a></span>:</p>
+<img role="img" data-src="data:image/png;base64,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" class="quarto-figure quarto-figure-center r-stretch" id="fig-etiqueta"><p class="caption">
+Figure 2: Sencuencia tempora
+</p></section>
+<section id="metodología-preliminar-1" class="slide level2 smaller">
+<h2>Metodología preliminar</h2>
 <div class="columns">
-<div class="column" style="width:38%;">
+<div class="column" style="width:47%;">
 <ul>
-<li><p><strong>Recall (Sensibilidad)</strong>: Capacidad de identificar correctamente todos los verdaderos positivos.</p>
-<p><span class="math inline">\(Recall = \frac{VP}{VP + FN}\)</span></p></li>
-<li><p><strong>Accuracy (Exactitud)</strong>: Exactitud global.</p>
-<p><span class="math inline">\(Accuracy = \frac{VP + VN}{VP + FP + FN + VN}\)</span></p></li>
+<li><strong>Fase 1</strong>: Definición del problema.
+<ul>
+<li>Enfoque del problema.</li>
+<li>Definir las clases, es decir, las clasificaciones.</li>
+<li>Seleccionar las variables.</li>
+</ul></li>
+<li><strong>Fase 2</strong>: Preprocesamiento de datos.
+<ul>
+<li>Limpieza e imputación de datos faltantes.</li>
+<li>Normalización.</li>
+<li>Codificación.</li>
+<li>Estructura temporal.</li>
+</ul></li>
 </ul>
-</div><div class="column" style="width:4%;">
-<!-- Esta es una columna invisible que hace de separador -->
-</div><div class="column" style="width:58%;">
+</div><div class="column" style="width:6%;">
+<!-- Columna invisible para separar -->
+</div><div class="column" style="width:47%;">
 <ul>
-<li><p><strong>Matriz de confusión</strong>: Visualización de errores.</p>
-<div style="font-size: 60%;">
-<table class="caption-top">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-<col style="width: 25%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Real <br> Predicción</th>
-<th>Predice:<br>Folicular</th>
-<th>Predice:<br>Ovulatoria</th>
-<th>Predice:<br>Lútea</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><strong>Real:<br>Folicular</strong></td>
-<td>VP (Folic.)</td>
-<td>FN (Folic.) /<br>FP (Ovul.)</td>
-<td>FN (Folic.) /<br>FP (Lútea)</td>
-</tr>
-<tr class="even">
-<td><strong>Real:<br>Ovulatoria</strong></td>
-<td>FN (Ovul.) /<br>FP (Folic.)</td>
-<td>VP (Ovul.)</td>
-<td>FN (Ovul.) /<br>FP (Lútea)</td>
-</tr>
-<tr class="odd">
-<td><strong>Real:<br>Lútea</strong></td>
-<td>FN (Lútea) /<br>FP (Folic.)</td>
-<td>FN (Lútea) /<br>FP (Ovul.)</td>
-<td>VP (Lútea)</td>
-</tr>
-</tbody>
-</table>
-</div></li>
-<li><p><strong>F1-Score</strong>: Media armónica entre precisión y sensibilidad. Varia entre 0 (peor) y 1 (perfecto).</p>
-<p><span class="math inline">\(F1 = 2 \cdot \frac{Precision \cdot Recall}{Precision + Recall}\)</span></p>
-<p>donde <span class="math inline">\(Precision = \frac{VP}{VP + FP}\)</span></p></li>
+<li><strong>Fase 3</strong>: Selección y arquitectura de modelos.
+<ul>
+<li>Modelos de referencia.</li>
+<li>CNN 1D.</li>
+<li>LSTM.</li>
+<li>Capa de salida.</li>
+</ul></li>
+<li><strong>Fase 4</strong>: Entrenamiento.
+<ul>
+<li>División de los datos.</li>
+<li>Tratamiento del desbalance.</li>
+</ul></li>
+<li><strong>Fase 5</strong>: Métricas de evaluación.
+<ul>
+<li>Sensibilidad.</li>
+<li>Exactitud.</li>
+<li>Matriz de confusión.</li>
+<li>F1-Score.</li>
+</ul></li>
 </ul>
 </div></div>
+</section></section>
+<section>
+<section id="conclusión" class="title-slide slide level1 center">
+<h1>Conclusión</h1>
+
+</section>
+<section id="conclusiones-y-próximos-pasos" class="slide level2 smaller">
+<h2>Conclusiones y Próximos Pasos</h2>
+<ul>
+<li><p>El uso de arquitecturas secuenciales (LSTM y 1D-CNN) permite capturar dependencias a largo plazo, esenciales para modelar ciclos irregulares.</p></li>
+<li><p>La formulación del problema como una clasificación <em>Many-to-One</em> asegura que</p></li>
+<li><p>Más allá del rendimiento del algoritmo,</p></li>
+<li><p><strong>Próximos pasos</strong>: Ejecutar el preprocesamiento, entrenar las arquitecturas propuestas y validar los modelos.</p></li>
+<li><p><strong>Superación de los métodos clásicos:</strong> El uso de arquitecturas secuenciales (LSTM y 1D-CNN) permite abandonar la rigidez del método del calendario, capturando las dependencias a largo plazo esenciales para modelar ciclos irregulares.</p></li>
+<li><p><strong>Rigor metodológico:</strong> La formulación del problema como una clasificación multiclase (<em>Many-to-One</em>) asegura que la evaluación se realice con métricas probabilísticas robustas (F1-Score), descartando errores continuos inapropiados.</p></li>
+<li><p><strong>Impacto clínico e integral:</strong> Más allá del rendimiento algorítmico, este sistema habilita la planificación familiar precisa, el manejo proactivo de síntomas y la generación de intervenciones nutricionales personalizadas [3].</p></li>
+<li><p><strong>Próximos pasos:</strong> Ejecutar el preprocesamiento, entrenar las arquitecturas propuestas y validar empíricamente la superación de la línea base (Machine Learning clásico).</p></li>
+</ul>
 </section>
 <section id="referencias" class="slide level2 smaller scrollable">
 <h2>Referencias</h2>
