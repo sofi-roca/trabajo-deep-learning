@@ -74,11 +74,11 @@ Variación ciclo = Ciclo más largo - Ciclo más corto [@munro2022figo]
 
 ## Planteamiento del problema {.smaller}
 
-**Problema:** Los métodos manuales y calendarios asumen ciclos estáticos y regulares. Estos fallan ante alteraciones por estrés, estilo de vida o diagnósticos médicos, además son propensos al error humano.
+**Problema:** Los métodos manuales y calendarios asumen ciclos estáticos y regulares. Estos fallan ante alteraciones por estrés, estilo de vida o diagnósticos médicos; además, son propensos al error humano.
 
 También tenemos un desafío computacional, ya que los historiales menstruales conforman series temporales ruidosas, incompletas y con dependencias complejas a largo plazo.
 
-Por lo que los algoritmos lineales clásicos son incapaces de procesar y capturar esta variabilidad de manera efectiva
+Por lo que los algoritmos lineales clásicos son incapaces de procesar y capturar esta variabilidad de manera efectiva.
 
 **Solución:** Desarrollar arquitecturas avanzadas de Deep Learning que procesen secuencias temporales y biomarcadores fisiológicos para clasificar las fases en ciclos regulares e irregulares.
 
@@ -86,7 +86,7 @@ Por lo que los algoritmos lineales clásicos son incapaces de procesar y captura
 
 Algunas de las dimensiones que más se ven impactadas al desarrollar un buen modelo de clasificación son:
 
-- **Salud Reproductiva y Planificación Familiar:** Permite a las parejas planificar o evitar embarazos de manera natural, reduciendo los riesgos de salud o económicas.
+- **Salud Reproductiva y Planificación Familiar:** Permite a las parejas planificar o evitar embarazos de manera natural, reduciendo los riesgos de salud o económicos.
 
 - **Manejo Personalizado de Síntomas:** Ayuda a gestionar ciertos síntomas como la fatiga, cambios de humor, calambres, etc.
 
@@ -99,16 +99,16 @@ Algunas de las dimensiones que más se ven impactadas al desarrollar un buen mod
 ## Modelado de Series Temporales {.smaller}
 
 ::: {style="font-size: 70%;"}
-| Modelo | Precisión | Error | Adaptabilidad |
-|------------------|------------------|------------------|------------------|
-| **LSTM** [@khairunisa2025comparison] | **90% – 91.3%** | RMSE: 1.7 | Excelente. Modela ciclos irregulares. |
-| **CNN 1D** | **88.9%** | RMSE: 1.9 | Buena: Identifica patrones clave, pero es inferior a LSTM en secuencias largas. |
-| **ML Clásico** [@harshavardhan2025ai] | **78% – 85.2%** | RMSE: 2.3 | Baja. Falla ante ciclos irregulares. |
+| Modelo | Precisión | Adaptabilidad |
+|------------------|------------------|------------------|
+| **LSTM** [@khairunisa2025comparison] | **90% – 91.3%** | Excelente. Modela ciclos irregulares. |
+| **CNN 1D** | **88.9%** | Buena: Identifica patrones clave, pero es inferior a LSTM en secuencias largas. |
+| **ML Clásico** [@harshavardhan2025ai] | **78% – 85.2%** | Baja. Falla ante ciclos irregulares. |
 :::
 
 \vspace{0.3cm}
 
-\scriptsize Por lo tanto, las redes **LSTM** dominan la clasificación de las fases del ciclo menstrual, debido a su capacidad para capturar dependencias temporales y patrones históricos complejos. En cambio el modelo clásico presenta dificultades para mantener la consistencia temporal en ciclos irregulares.
+\scriptsize Por lo tanto, las redes **LSTM** dominan la clasificación de las fases del ciclo menstrual, debido a su capacidad para capturar dependencias temporales y patrones históricos complejos. En cambio, el modelo clásico presenta dificultades para mantener la consistencia temporal en ciclos irregulares.
 
 ## Biomarcadores Fisiológicos {.smaller}
 
@@ -126,8 +126,8 @@ Algunas de las dimensiones que más se ven impactadas al desarrollar un buen mod
 ::: {style="font-size: 70%;"}
 | Enfoque | Algoritmos | Aplicación | Impacto |
 |------------------|------------------|------------------|------------------|
-| **Nutrición** [@logapriya2024optimized] | Transformers | Identificar fases a partir de sintomas y recomendar dietas personalizadas. | **96% precisión**, superando a redes CNN, GANs y RNNs (menor tasa de error) |
-| **Prevención de Riesgos** [@gulati2026menstrual] | Ecosistemas Multimodelo (Random Forest) | Evalua síntomas oara alertar sobre condiciones (como el SOP o dismenorrea) y pronostica síntomas diarios. | 73% de exactitud en síntomas de alerta y 82% al pronosticar síntomas. |
+| **Nutrición** [@logapriya2024optimized] | Transformers | Identificar fases a partir de síntomas y recomendar dietas personalizadas. | **96% precisión** al procesar datos de síntomas para recomendaciones nutricionales |
+| **Prevención de Riesgos** [@gulati2026menstrual] | Ecosistemas Multimodelo (Random Forest) | Evalúa síntomas para alertar sobre condiciones (como el SOP o dismenorrea) y pronostica síntomas diarios. | 73% de exactitud en síntomas de alerta y 82% al pronosticar síntomas. |
 | **Sistemas híbridos** [@khadse2025systematic] | Reglas Matemáticas + LSTM | Corregir ciclos anómalos con biometría. | Menor MSE y alta precisión temporal. |
 :::
 
@@ -139,13 +139,13 @@ Algunas de las dimensiones que más se ven impactadas al desarrollar un buen mod
 
 ## Hipótesis {.smaller}
 
-**Hipótesis principal**:  Contrario a métodos tradicionales (como el método del calendario o regresión lineal) que asumen ciclos mentruales regulares, un modelo de Deep Learning enfocadas en secuencias temporales (como LSTM y 1D-CNN) logrará clasificar de manera precisa en que fase se encuentra una persona, adaptándose a usuarias con ciclos irregulares.
+**Hipótesis principal**:  Contrario a métodos tradicionales (como el método del calendario o regresión lineal) que asumen ciclos menstruales regulares, un modelo de Deep Learning enfocado en secuencias temporales (como LSTM y 1D-CNN) logrará clasificar de manera precisa en que fase se encuentra una persona, adaptándose a usuarias con ciclos irregulares.
 
 **Hipótesis secundarias**:
 
-- Los modelos de Deep Learning, como el modelo de clasificación *many-to-one*, superarán a los algoritmos tradicionales de Machine Learning en la clasificación de las tres clases (Menstrual/Folicular, Ovulatoria y Lútea), mostrando un desempeño superior al ser evaluadas bajo métricas para clasificación.
+- Los modelos de Deep Learning, como el modelo de clasificación *many-to-one*, superarán a los algoritmos tradicionales de Machine Learning en la clasificación de las tres clases (Menstrual/Folicular, Ovulatoria y Lútea), mostrando un desempeño superior al ser evaluados bajo métricas para clasificación.
 
-- El aplicar técnicas de imputación de datos, mitigará el impacto negativo de los registros nulos en historiales clínicos incompletos, preservando la varianza biológica original de las usuarias y previniendo la alteración de las dependencias a largo plazo necesarias para el entrenamiento de la red LSTM.
+- El aplicar técnicas de imputación de datos mitigará el impacto negativo de los registros nulos en historiales clínicos incompletos, preservando la varianza biológica original de las usuarias y previniendo la alteración de las dependencias a largo plazo necesarias para el entrenamiento de la red LSTM.
 
 ## Objetivos {.smaller}
 
@@ -153,17 +153,17 @@ Algunas de las dimensiones que más se ven impactadas al desarrollar un buen mod
 
 **Objetivos específicos:**
 
-- Ejecutar un código de preprocesamiento para datos secuenciales que incluya la limpueza e imputación, la normalización de escalas numericas y la codificación *One-Hot* de las variables objetivo, transformando la base de datos tabular en estructura de tensores 3D mediante ventanas temporales.
+- Ejecutar un código de preprocesamiento para datos secuenciales que incluya la limpieza e imputación, la normalización de escalas numéricas y la codificación *One-Hot* de las variables objetivo, transformando la base de datos tabular en estructura de tensores 3D mediante ventanas temporales.
 
 - Construir modelos de redes neuronales (1D-CNN y LSTM) estructurados bajo una arquitectura *Many-to-One* con una capa de salida *Softmax* de 3 clases, aplicando técnicas para evitar el sobreajuste en los datos irregulares.
 
-- Comparar el rendimiento predictivo de las arquitecturas propuestas frente a modelos de referencia clásicos de Machine Learning, validando la capacidad de clasificación mediante el análisis de la matriz de confunsión y otrás métricas tales como la sensibilidad, la exactitud y el F1-Score. 
+- Comparar el rendimiento predictivo de las arquitecturas propuestas frente a modelos de referencia clásicos de Machine Learning, validando la capacidad de clasificación mediante el análisis de la matriz de confusión y otras métricas tales como la sensibilidad, la exactitud y el F1-Score. 
 
 # Metodología preliminar
 
 # Base de datos {.smaller}
 
-**Base de datos** de 80 variables y 1665 observaciones extraida de [Kaggle](https://www.kaggle.com/datasets/nikitabisht/menstrual-cycle-data)
+**Base de datos** de 80 variables y 1.665 observaciones extraída de [Kaggle](https://www.kaggle.com/datasets/nikitabisht/menstrual-cycle-data)
 
 Registros de ciclos menstruales de 159 personas.
 
@@ -313,7 +313,7 @@ bscols(
 
 - **Fase 1**: Definición del problema.
    - Enfoque del problema.
-   - Definir las clases, es decir, las clasificaciones.
+   - Definir las clases (categorías).
    - Seleccionar las variables.
 
 - **Fase 2**: Preprocesamiento de datos.
@@ -338,7 +338,8 @@ bscols(
 
 - **Fase 4**: Entrenamiento.
    - División de los datos.
-   - Tratamiento del desbalance.
+   - Función de coste y optimización.
+   - Prevención del sobreajuste.
 
 - **Fase 5**: Métricas de evaluación.
    - Sensibilidad.
@@ -354,18 +355,13 @@ bscols(
 
 ## Conclusiones y Próximos Pasos {.smaller}
 
-- El uso de arquitecturas secuenciales (LSTM y 1D-CNN) permite capturar dependencias a largo plazo, esenciales para modelar ciclos irregulares.
+- Tratar el ciclo menstrual como una serie temporal ruidosa justifica abandonar el Machine Learning clásico. La arquitectura propuesta (1D-CNN + LSTM Many-to-One) es ideal para extraer patrones locales y capturar la memoria a largo plazo en el caso de ciclos irregulares.
 
-- La formulación del problema como una clasificación *Many-to-One* asegura que 
+- La imputación secuencial (evitando eliminar los valores nulos) es un paso crítico para no romper con la cronología y preservar la varianza biológica de las usuarias.
 
-- Más allá del rendimiento del algoritmo, 
+- Al definir el problema estrictamente como una clasificación de 3 fases, la validación se centra en métricas robustas ante el desbalance, como el F1-Score y la matriz de confusión.
 
-- **Próximos pasos**: Ejecutar el preprocesamiento, entrenar las arquitecturas propuestas y validar los modelos. 
-
-- **Superación de los métodos clásicos:** El uso de arquitecturas secuenciales (LSTM y 1D-CNN) permite abandonar la rigidez del método del calendario, capturando las dependencias a largo plazo esenciales para modelar ciclos irregulares.
-- **Rigor metodológico:** La formulación del problema como una clasificación multiclase (*Many-to-One*) asegura que la evaluación se realice con métricas probabilísticas robustas (F1-Score), descartando errores continuos inapropiados.
-- **Impacto clínico e integral:** Más allá del rendimiento algorítmico, este sistema habilita la planificación familiar precisa, el manejo proactivo de síntomas y la generación de intervenciones nutricionales personalizadas [3].
-- **Próximos pasos:** Ejecutar el preprocesamiento, entrenar las arquitecturas propuestas y validar empíricamente la superación de la línea base (Machine Learning clásico).
+**Próximos pasos:** Desarrollar la imputación de datos, codificar los datos en tensores 3D mediante ventanas temporales, entrenar los modelos propuestos y validar empíricamente su rendimiento frente a modelos de Machine Learning.
 
 ## Referencias
 
