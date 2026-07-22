@@ -200,7 +200,110 @@ Visualización de las primeras 5 observaciones de la base de datos.
 | nfp8122 | 5 | NA | NA | 28 | NA | 5 | NA | NA | 12 | 4 | 2 | 16 | 12 |
 :::
 
-![Sencuencia tempora](secuencia_temporal.png){#fig-etiqueta fig-align="center"}
+```{r}
+#| label: setup-datos
+#| message: false
+#| warning: false
+
+library(dplyr)
+
+setwd("C:/Users/sofir/OneDrive/Escritorio/Universidad/Deep learning/Código")
+datos_ciclos = read.csv("FedCycleData071012 (2).csv")
+
+datos_ciclos = datos_ciclos %>%
+  # Variables de entrada (Features / X):
+  # Variables biométricas (Estáticas): Age, BMI
+  # Variables históricas (Base de referencia del paciente): MeanCycleLength, MeanMensesLength, 
+  # MeanBleedingIntensity
+  # Variables dinámicas secuenciales (El corto plazo temporal): LengthofCycle, LengthofMenses, 
+  # FirstDayofHigh,
+  # TotalNumberofHighDays, TotalNumberofPeakDays
+  
+  # Variables de salida (Target / Y):
+  # EstimatedDayofOvulation,
+  # LengthofLutealPhase
+  select(ClientID, CycleNumber, Age, BMI, LengthofCycle, MeanCycleLength, LengthofMenses,
+         MeanMensesLength, MeanBleedingIntensity, FirstDayofHigh, TotalNumberofHighDays,
+         TotalNumberofPeakDays, EstimatedDayofOvulation, LengthofLutealPhase)
+
+# Dado que las observaciones fijas (como la edad o el imc) aparecen solo una vez para cada
+# persona, se necesita utilizar la funcion fill para rellenar hacia abajo.
+
+datos_ciclos = datos_ciclos %>% 
+  rename(id                         = ClientID,
+         numero_ciclo               = CycleNumber,
+         edad                       = Age,
+         imc                        = BMI,
+         duracion_ciclo             = LengthofCycle,
+         promedio_duracion_ciclo    = MeanCycleLength,
+         duracion_menstruacion      = LengthofMenses,
+         promedio_duracion_menstruacion   = MeanMensesLength,
+         intensidad_sangrado_media  = MeanBleedingIntensity,
+         primer_dia_alta_fertilidad            = FirstDayofHigh,
+         total_dias_alta_fertilidad           = TotalNumberofHighDays,
+         total_dias_peak_fertilidad            = TotalNumberofPeakDays,
+         dia_estimado_ovulacion     = EstimatedDayofOvulation,
+         duracion_fase_lutea        = LengthofLutealPhase)
+```
+
+```{r}
+#| label: grafico-interactivo
+#| message: false
+#| warning: false
+
+library(ggplot2)
+library(dplyr)
+library(plotly)
+library(crosstalk)
+
+# A. Limpieza defensiva
+# Forzamos la estructura a data.frame puro, quitamos grupos previos de dplyr, 
+# y evitamos cualquier NA en las columnas clave que pueda quebrar el menú.
+df_plot <- datos_ciclos %>%
+  ungroup() %>%
+  select(id, numero_ciclo, duracion_ciclo) %>%
+  filter(!is.na(id), !is.na(numero_ciclo), !is.na(duracion_ciclo)) %>%
+  mutate(id = as.character(id)) %>%
+  as.data.frame()
+
+# B. Crear el objeto SharedData
+# Pasamos la llave como un vector directo (df_plot$id) en lugar de una fórmula (~id)
+sd_data <- SharedData$new(df_plot, key = df_plot$id)
+
+# C. Crear el menú desplegable (Dropdown)
+filtro <- filter_select(
+  id = "filtro_id", 
+  label = "Selecciona el ID de la usuaria:", 
+  sharedData = sd_data, 
+  group = ~id, 
+  multiple = FALSE
+)
+
+# D. Crear el gráfico base con ggplot2
+# El argumento 'group = id' sigue siendo vital para que las líneas se tracen por usuaria
+grafico_base <- ggplot(sd_data, aes(x = numero_ciclo, y = duracion_ciclo, group = id)) +
+  geom_line(color = "#9B4D4D", linewidth = 1) +
+  geom_point(color = "#9B4D4D", size = 1.5) +
+  labs(
+    title = "Fluctuación de la Duración del Ciclo Menstrual en el Tiempo",
+    x = "Número de Ciclo (Secuencia temporal)",
+    y = "Duración del Ciclo (Días)"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(color = "#2D2926", size = 14),
+    axis.title = element_text(color = "#2D2926"),
+    panel.grid.minor = element_blank()
+  )
+
+# E. Unir el filtro y el gráfico en la estructura HTML
+bscols(
+  widths = c(12, 12),
+  filtro,
+  ggplotly(grafico_base, tooltip = c("x", "y"))
+)
+```
+
 
 ## Metodología preliminar {.smaller}
 
