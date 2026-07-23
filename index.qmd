@@ -139,25 +139,23 @@ Algunas de las dimensiones que más se ven impactadas al desarrollar un buen mod
 
 ## Hipótesis {.smaller}
 
-**Hipótesis principal**:  Contrario a métodos tradicionales (como el método del calendario o regresión lineal) que asumen ciclos menstruales regulares, un modelo de Deep Learning enfocado en secuencias temporales (como LSTM y 1D-CNN) logrará clasificar de manera precisa en que fase se encuentra una persona, adaptándose a usuarias con ciclos irregulares.
-
-**Hipótesis secundarias**:
-
-- Los modelos de Deep Learning, como el modelo de clasificación *many-to-one*, superarán a los algoritmos tradicionales de Machine Learning en la clasificación de las tres clases (Menstrual/Folicular, Ovulatoria y Lútea), mostrando un desempeño superior al ser evaluados bajo métricas para clasificación.
-
-- El aplicar técnicas de imputación de datos mitigará el impacto negativo de los registros nulos en historiales clínicos incompletos, preservando la varianza biológica original de las usuarias y previniendo la alteración de las dependencias a largo plazo necesarias para el entrenamiento de la red LSTM.
+La implementación de una arquitectura de Deep Learning basada en redes recurrentes (LSTM) bajo un enfoque secuencial *Many-to-One*, superará significativamente el desempeño de los modelos de referencia simples (modelo bases o calendarios estáticos) en la clasificación de la fase del ciclo menstrual. Esta arquitectura será capaz de capturar las dependencias temporales a largo plazo y extraer relaciones ocultas en ciclos irregulares y ruidosos, donde los algoritmos tradicionales fallan.
 
 ## Objetivos {.smaller}
 
-**Objetivo general:** Desarrollar, implementar y evaluar un sistema de clasificación basado en arquitecturas de Deep Learning secuenciales, capaz de determinar con alta precisión la fase del ciclo menstrual de una usuaria, modelando las dependencias temporales y la variabilidad presente en ciclos irregulares.
+**Objetivo general:** Proponer y diseñar una arquitectura de Deep Learning ideal para el procesamiento de series temporales fisiológicas, con el fin de clasificar la fase biológica del ciclo menstrual en usuarias con patrones regulares e irregulares.
 
 **Objetivos específicos:**
 
-- Ejecutar un código de preprocesamiento para datos secuenciales que incluya la limpieza e imputación, la normalización de escalas numéricas y la codificación *One-Hot* de las variables objetivo, transformando la base de datos tabular en estructura de tensores 3D mediante ventanas temporales.
+- Modelar el problema como una tarea de clasificación de secuencias temporales mediante un enfoque Many-to-One (Muchos a Uno).
 
-- Construir modelos de redes neuronales (1D-CNN y LSTM) estructurados bajo una arquitectura *Many-to-One* con una capa de salida *Softmax* de 3 clases, aplicando técnicas para evitar el sobreajuste en los datos irregulares.
+- Preprocesar la base de datos mediante técnicas de imputación que mantengan la estructura y la dependencia temporal de los registros con valores faltantes.
 
-- Comparar el rendimiento predictivo de las arquitecturas propuestas frente a modelos de referencia clásicos de Machine Learning, validando la capacidad de clasificación mediante el análisis de la matriz de confusión y otras métricas tales como la sensibilidad, la exactitud y el F1-Score. 
+- Diseñar una arquitectura de Deep Learning que integre memoria a largo plazo (como las LSTM) para procesar la naturaleza secuencial de los historiales menstruales.
+
+- Configurar un entrenamiento robusto que incorpore técnicas de regularización, como la *Early Stopping*, para prevenir el sobreajuste.
+
+- Establecer un marco de evaluación que compare el desempeño de la red neuronal contra modelos de referencia utilizando métricas para clasificación, como la matriz de confusión y F1-Score.
 
 # Metodología preliminar
 
@@ -313,20 +311,14 @@ bscols(
 
 - **Fase 1**: Definición del problema.
    - Enfoque del problema.
-   - Definir las clases (categorías).
-   - Seleccionar las variables.
+   - Aquitectura objetivo.
 
 - **Fase 2**: Preprocesamiento de datos.
-   - Limpieza e imputación de datos faltantes.
-   - Normalización.
-   - Codificación.
-   - Estructura temporal.
+   - Limpieza e imputación.
 
 - **Fase 3**: Arquitectura de modelos.
-   - Modelos de referencia.
-   - CNN 1D.
+   - 1D-CNN.
    - LSTM.
-   - Capa de salida.
    
 ::::
 
@@ -338,15 +330,13 @@ bscols(
 
 
 - **Fase 4**: Entrenamiento.
-   - División de los datos.
-   - Función de coste y optimización.
+   - Función de coste.
+   - Optimización.
    - Prevención del sobreajuste.
 
-- **Fase 5**: Métricas de evaluación.
-   - Sensibilidad.
-   - Exactitud.
-   - Matriz de confusión.
-   - F1-Score.
+- **Fase 5**: Evaluación y modelos de referencia.
+   - Modelos bases.
+   - Métricas.
 
 ::::
 
@@ -354,15 +344,13 @@ bscols(
 
 # Conclusión
 
-## Conclusiones y Próximos Pasos {.smaller}
+## Conclusión {.smaller}
 
-- Tratar el ciclo menstrual como una serie temporal ruidosa justifica abandonar el Machine Learning clásico. La arquitectura propuesta (1D-CNN + LSTM Many-to-One) es ideal para extraer patrones locales y capturar la memoria a largo plazo en el caso de ciclos irregulares.
+- Se evidencia que los métodos tradicionales son insuficientes para abordar la naturaleza variable del ciclo menstrual.
 
-- La imputación secuencial (evitando eliminar los valores nulos) es un paso crítico para no romper con la cronología y preservar la varianza biológica de las usuarias.
+- Al formular el problema orientado a las secuencias temporables, la metodología de Deep Learning propuesta, nos entrega las herramientas exactas para resolverlo.
 
-- Al definir el problema estrictamente como una clasificación de 3 fases, la validación se centra en métricas robustas ante el desbalance, como el F1-Score y la matriz de confusión.
-
-**Próximos pasos:** Desarrollar la imputación de datos, codificar los datos en tensores 3D mediante ventanas temporales, entrenar los modelos propuestos y validar empíricamente su rendimiento frente a modelos de Machine Learning.
+- La capacidad de una red como las LSTM para aprender representaciones a partir de datos ruidosos, sumada a un entrenamiento con validación estricta, nos asegura que estamos construyendo una solución computacionalmente robusta, y con un impacto directo en la monitorización de la salud reproductiva.
 
 ## Referencias
 
