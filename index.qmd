@@ -311,7 +311,7 @@ bscols(
 
 - **Fase 1**: Definición del problema.
    - Enfoque del problema.
-   - Aquitectura objetivo.
+   - Aquitectura objetivo. [@plaza2025deeplearning]
 
 - **Fase 2**: Preprocesamiento de datos.
    - Limpieza e imputación.
@@ -332,10 +332,10 @@ bscols(
 - **Fase 4**: Entrenamiento.
    - Función de coste.
    - Optimización.
-   - Prevención del sobreajuste.
+   - Prevención del sobreajuste. [@plaza2025deeplearning]
 
 - **Fase 5**: Evaluación y modelos de referencia.
-   - Modelos bases.
+   - Modelos bases. [@plaza2025deeplearning]
    - Métricas.
 
 ::::
